@@ -7,28 +7,29 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#bb86fc">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet" />
+    
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <style>
         :root { --p: #bb86fc; --b: #0a0a0a; --c: #1e1e1e; --t: #ffffff; --fluorescent: #ccff00; --orange: #e65100; --blue: #00d2ff; }
-        * { box-sizing: border-box; outline: none; transition: 0.3s; }
+        * { box-sizing: border-box; transition: 0.3s; }
         body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); margin: 0; padding-bottom: 80px; }
         
+        #google_translate_element { display: none; }
+        .goog-te-banner-frame { display: none !important; }
+
         .header-kpop { 
-            width: 100%; height: 100px; 
-            background: radial-gradient(circle at top right, #4a148c, #000 90%); 
+            width: 100%; height: 90px; 
+            background: linear-gradient(135deg, #4a148c, #000); 
             display: flex; align-items: center; justify-content: center;
             border-bottom: 2px solid var(--p);
         }
-        .brand-name { font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
-        .brand-name span { color: var(--p); }
-
-        #btn-install {
-            display: none; background: var(--fluorescent); color: #000; border: none; padding: 15px; 
-            width: 90%; max-width: 450px; border-radius: 50px; font-weight: 900;
-            font-size: 0.9rem; text-transform: uppercase; cursor: pointer;
-            margin: 15px auto; box-shadow: 0 0 20px var(--fluorescent);
-            animation: pulse-yellow 2s infinite; text-align: center;
-        }
-        @keyframes pulse-yellow { 0% { transform: scale(1); } 70% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .brand-name { font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; }
 
         .tabs-container {
             display: flex; justify-content: space-around; background: #000;
@@ -36,33 +37,63 @@
         }
         .tab-button {
             padding: 15px; color: #888; font-weight: 700; font-size: 0.7rem;
-            text-transform: uppercase; cursor: pointer; border-bottom: 3px solid transparent;
+            text-transform: uppercase; cursor: pointer;
         }
         .tab-button.active { color: var(--p); border-bottom: 3px solid var(--p); }
 
         .content-section { display: none; padding: 15px; width: 100%; max-width: 500px; margin: auto; }
         .content-section.active { display: block; }
 
-        .item-card { background: var(--c); border-radius: 20px; margin-bottom: 20px; overflow: hidden; border: 1px solid #252525; }
-        .item-img { width: 100%; height: 240px; object-fit: cover; display: block; background: #222; }
+        .item-card { background: var(--c); border-radius: 20px; margin-bottom: 25px; overflow: hidden; border: 1px solid #333; }
+        .item-img { width: 100%; height: 250px; object-fit: cover; display: block; }
         
+        .card-footer { padding: 15px; }
+        .news-title { font-weight: 700; color: var(--t); font-size: 0.95rem; margin-bottom: 12px; }
+
         .btn-unlock { 
-            background: linear-gradient(to right, #f1c40f, var(--orange)); 
+            background: linear-gradient(45deg, #f1c40f, #e67e22); 
             color: #000; padding: 12px; width: 100%; border-radius: 10px; 
-            font-weight: 900; text-transform: uppercase; cursor: pointer; border:none; display: block; text-align: center;
+            font-weight: 900; text-transform: uppercase; cursor: pointer; border:none; 
+            display: block; text-align: center; text-decoration: none;
         }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .photo-item { border-radius: 12px; overflow: hidden; height: 180px; position: relative; cursor: pointer; border: 1px solid #333; }
-        .photo-item img { width: 100%; height: 100%; object-fit: cover; filter: blur(15px); transition: 0.5s; }
-        .photo-item.unlocked img { filter: blur(0); }
-        .lock-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
-        .photo-item.unlocked .lock-overlay { display: none; }
+        .photo-item { background: var(--c); border-radius: 15px; overflow: hidden; border: 1px solid #333; }
+        .img-container { height: 180px; overflow: hidden; position: relative; }
+        .photo-img { width: 100%; height: 100%; object-fit: cover; filter: blur(4px); } 
+        .photo-item.unlocked .photo-img { filter: blur(0); }
+        
+        .photo-footer { padding: 10px; text-align: center; }
+        .btn-photo-unlock { 
+            font-size: 0.65rem; background: var(--p); color: #000; border: none; 
+            padding: 8px; border-radius: 5px; font-weight: 900; width: 100%; cursor: pointer;
+        }
 
         .event-card { background: #111; border-left: 4px solid var(--blue); padding: 15px; margin-bottom: 10px; border-radius: 8px; }
+
+        /* ESTILOS DEL MENSAJE DE BIENVENIDA */
+        #welcome-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-content {
+            background: var(--c); border: 2px solid var(--p); border-radius: 25px;
+            padding: 30px; text-align: center; max-width: 400px;
+        }
     </style>
 </head>
 <body>
+
+<div id="google_translate_element"></div>
+
+<div id="welcome-modal">
+    <div class="modal-content">
+        <h2 style="color:var(--p); margin-top:0;">¡BIENVENIDO!</h2>
+        <p style="font-size: 0.9rem;">Explora las últimas noticias, videos y fotos exclusivas de tus artistas favoritos de K-POP.</p>
+        <p style="font-size: 0.8rem; color: #888;">Toca los botones de desbloqueo para acceder al contenido Premium.</p>
+        <button onclick="closeWelcome()" class="btn-unlock" style="margin-top:20px;">EMPEZAR AHORA</button>
+    </div>
+</div>
 
 <header class="header-kpop">
     <div class="brand-name">TOTAL <span>K-POP</span></div>
@@ -75,8 +106,6 @@
     <div class="tab-button" onclick="showTab('tab-events')"> EVENTOS</div>
 </div>
 
-<button id="btn-install" onclick="installApp()"> INSTALAR APP K-POP </button>
-
 <main>
     <section id="tab-news" class="content-section active"><div id="news-feed"></div></section>
     <section id="tab-videos" class="content-section"><div id="videos-feed"></div></section>
@@ -84,8 +113,13 @@
     <section id="tab-events" class="content-section"><div id="events-feed"></div></section>
 </main>
 
+<footer style="padding: 20px; text-align: center; font-size: 0.7rem; color: #555; background: #000; border-top: 1px solid #222;">
+    <p>© 2026 TOTAL K-POP Global - Todos los derechos reservados.</p>
+    <a href="javascript:void(0)" onclick="showPrivacy()" style="color: var(--p); text-decoration: none;">Política de Privacidad y Cookies</a>
+</footer>
+
 <script>
-    const artists = ['BTS', 'BLACKPINK', 'TWICE', 'STRAY KIDS', 'NEWJEANS', 'AESPA', 'SEVENTEEN', 'IVE', 'NCT', 'ITZY', 'RED VELVET', 'TXT', 'ENHYPEN', 'LE SSERAFIM', 'LISA', 'JENNIE', 'JISOO', 'ROSE', 'JUNGKOOK'];
+    const artists = ['BTS', 'BLACKPINK', 'TWICE', 'STRAY KIDS', 'NEWJEANS', 'AESPA', 'LISA', 'JENNIE', 'JUNGKOOK'];
 
     function showTab(tabId) {
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
@@ -94,18 +128,26 @@
         if(event) event.currentTarget.classList.add('active');
     }
 
-    // LÓGICA DE IMAGEN FIJA Y ÚNICA
-    function getRelevantFixedImg(title) {
-        let detected = "kpop";
-        for (let name of artists) {
-            if (title.toUpperCase().includes(name)) {
-                detected = name.toLowerCase().replace(" ", "");
-                break;
-            }
+    // BIENVENIDA AUTOMÁTICA
+    function checkWelcome() {
+        if(!localStorage.getItem('welcomeShown')) {
+            document.getElementById('welcome-modal').style.display = 'flex';
         }
-        // Usamos una semilla basada en el título para que la imagen sea SIEMPRE la misma para esa noticia
-        const seed = btoa(title).substring(0, 10); 
-        return `https://loremflickr.com/600/400/${detected},music,kpop/all?lock=${seed}`;
+    }
+    function closeWelcome() {
+        localStorage.setItem('welcomeShown', 'true');
+        document.getElementById('welcome-modal').style.display = 'none';
+    }
+
+    // POLÍTICAS
+    function showPrivacy() {
+        alert('POLÍTICA DE PRIVACIDAD: Esta App utiliza cookies para mejorar la experiencia y anuncios de terceros para mantenerse gratuita. No recopilamos datos personales sensibles. Al usar esta App, aceptas nuestros términos.');
+    }
+
+    function getSafeImg(title, id) {
+        let keyword = "kpop";
+        for(let a of artists) { if(title.toUpperCase().includes(a)) keyword = a; }
+        return `https://images.weserv.nl/?url=https://loremflickr.com/600/400/${keyword},idol/all?lock=${id}&w=600&h=400&fit=cover`;
     }
 
     async function fetchKPopNews() {
@@ -114,14 +156,13 @@
             const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.soompi.com/feed&t=${Date.now()}`);
             const data = await res.json();
             feed.innerHTML = '';
-            data.items.forEach((item) => {
-                let imgSource = item.thumbnail || item.enclosure.link || getRelevantFixedImg(item.title);
+            data.items.forEach((item, i) => {
                 feed.innerHTML += `
                     <div class="item-card">
-                        <img src="${imgSource}" class="item-img" onerror="this.onerror=null; this.src='${getRelevantFixedImg(item.title)}';">
-                        <div style="padding:15px;">
-                            <div style="font-weight:700; color:var(--p); font-size:0.95rem;">${item.title}</div>
-                            <button class="btn-unlock" style="margin-top:15px;" onclick="handleUnlock('${item.link}')"> DESBLOQUEAR NOTICIA</button>
+                        <img src="${getSafeImg(item.title, i)}" class="item-img">
+                        <div class="card-footer">
+                            <div class="news-title">${item.title}</div>
+                            <button class="btn-unlock" onclick="handleUnlock('${item.link}')"> LEER NOTICIA COMPLETA</button>
                         </div>
                     </div>`;
             });
@@ -131,66 +172,83 @@
     async function fetchKPopVideos() {
         const vFeed = document.getElementById('videos-feed');
         try {
-            const rssUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=UCEf_Bc-KVd7onSeifS3py9g";
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
+            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=UCEf_Bc-KVd7onSeifS3py9g`);
             const data = await res.json();
             vFeed.innerHTML = '';
-            data.items.forEach(item => {
+            data.items.forEach((item, i) => {
                 const vidId = item.link.split('v=')[1];
-                vFeed.innerHTML += `<div class="item-card"><img src="https://img.youtube.com/vi/${vidId}/maxresdefault.jpg" class="item-img"><div style="padding:15px;"><div style="font-weight:700; font-size:0.9rem;">${item.title}</div><button class="btn-unlock" style="margin-top:10px;" onclick="revelarVideo(this, '${vidId}')"> DESBLOQUEAR VIDEO</button></div></div>`;
+                vFeed.innerHTML += `
+                    <div class="item-card">
+                        <img src="https://img.youtube.com/vi/${vidId}/maxresdefault.jpg" class="item-img">
+                        <div class="card-footer">
+                            <div class="news-title">${item.title}</div>
+                            <button class="btn-unlock" onclick="revelarVideo(this, '${vidId}')"> REPRODUCIR VIDEO</button>
+                        </div>
+                    </div>`;
             });
         } catch (e) { }
+    }
+
+    function loadPhotos() {
+        const pFeed = document.getElementById('photos-feed');
+        pFeed.innerHTML = '';
+        const groups = ['bts', 'blackpink', 'twice', 'straykids', 'aespa', 'ive', 'lisa', 'jungkook'];
+        groups.forEach((g, i) => {
+            pFeed.innerHTML += `
+                <div class="photo-item" id="p-${i}">
+                    <div class="img-container">
+                        <img src="${getSafeImg(g, i+50)}" class="photo-img">
+                    </div>
+                    <div class="photo-footer">
+                        <button class="btn-photo-unlock" onclick="unlockPhoto(${i})"> VER EN HD</button>
+                    </div>
+                </div>`;
+        });
     }
 
     async function fetchKPopEvents() {
         const eFeed = document.getElementById('events-feed');
         try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.soompi.com/tag/concert/feed&t=${Date.now()}`);
+            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.soompi.com/tag/concert/feed`);
             const data = await res.json();
             eFeed.innerHTML = '';
             data.items.slice(0, 10).forEach(item => {
-                const date = new Date(item.pubDate).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
-                eFeed.innerHTML += `<div class="event-card"><div style="color:var(--blue); font-weight:900; font-size:0.7rem;">EVENTO • ${date}</div><div style="font-weight:700; font-size:0.9rem; margin:5px 0;">${item.title}</div><a href="javascript:void(0)" onclick="handleUnlock('${item.link}')" style="color:var(--p); font-size:0.7rem; text-decoration:none; font-weight:bold;">MÁS INFO </a></div>`;
+                eFeed.innerHTML += `<div class="event-card"><div style="color:var(--blue); font-weight:900; font-size:0.7rem;">CALENDARIO MUNDIAL</div><div style="font-weight:700; font-size:0.85rem; margin:5px 0;">${item.title}</div><button onclick="handleUnlock('${item.link}')" style="background:none; border:none; color:var(--p); font-weight:bold; cursor:pointer; padding:0;">VER DETALLES </button></div>`;
             });
         } catch (e) { }
     }
 
     function handleUnlock(url) {
         window.open('https://otieu.com/4/10534539', '_blank');
-        setTimeout(() => { window.location.href = url; }, 1200);
+        setTimeout(() => { window.location.href = url; }, 1500);
+    }
+
+    function unlockPhoto(id) {
+        window.open('https://otieu.com/4/10534539', '_blank');
+        document.getElementById(`p-${id}`).classList.add('unlocked');
     }
 
     function revelarVideo(btn, vidId) {
         window.open('https://otieu.com/4/10534539', '_blank');
         const card = btn.closest('.item-card');
-        setTimeout(() => {
-            card.innerHTML = `<iframe src="https://www.youtube.com/embed/${vidId}?autoplay=1" style="width:100%; height:250px; border:0;" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-        }, 1200);
+        setTimeout(() => { 
+            card.innerHTML = `<iframe src="https://www.youtube.com/embed/${vidId}?autoplay=1" style="width:100%; height:250px; border:0;" allowfullscreen></iframe>`;
+        }, 1500);
     }
 
-    function loadPhotos() {
-        const photosFeed = document.getElementById('photos-feed');
-        const groups = ['bts', 'blackpink', 'twice', 'straykids', 'aespa', 'ive', 'seventeen', 'nct'];
-        photosFeed.innerHTML = '';
-        groups.forEach((group, i) => {
-            photosFeed.innerHTML += `<div class="photo-item" id="photo-${i}" onclick="unlockPhoto(${i})"><img src="https://loremflickr.com/400/600/${group},kpop?random=${i}"><div class="lock-overlay"></div></div>`;
-        });
-    }
-
-    function unlockPhoto(id) {
-        window.open('https://otieu.com/4/10534539', '_blank');
-        document.getElementById(`photo-${id}`).classList.add('unlocked');
-    }
-
-    function checkInstallation() {
-        const isApp = window.matchMedia('(display-mode: standalone)').matches;
-        if (!isApp) document.getElementById('btn-install').style.display = 'block';
-    }
-
-    window.onload = () => { checkInstallation(); fetchKPopNews(); fetchKPopVideos(); fetchKPopEvents(); loadPhotos(); };
+    window.onload = () => { 
+        checkWelcome();
+        fetchKPopNews(); 
+        fetchKPopVideos(); 
+        fetchKPopEvents(); 
+        loadPhotos(); 
+    };
 </script>
 </body>
 </html>
+
+
+
 
 
 
