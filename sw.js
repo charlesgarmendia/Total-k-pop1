@@ -1,40 +1,39 @@
-// Incrementa este número (v1.1, v1.30, etc.) cada vez que hagas un cambio en el HTML/CSS
-const CACHE_NAME = 'total-kpop-v1.1';
-const assets = [
-  '/',
-  '/index.html',
-  // Añade aquí otros archivos locales como iconos si los tienes
+// sw.js MEJORADO
+const CACHE_VERSION = 'kpop-master-v1.1';
+const STATIC_CACHE = `${CACHE_VERSION}-static`;
+const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
+
+const staticAssets = [
+  './',
+  './index.html',
+  './manifest.json',
+  // Agrega aquí otros assets estáticos
 ];
 
-// Instalación: Limpia el caché viejo automáticamente
-self.addEventListener('install', (event) => {
-  self.skipWaiting(); 
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(assets);
-    })
+    caches.open(STATIC_CACHE)
+      .then(cache => cache.addAll(staticAssets))
+      .then(() => self.skipWaiting())
   );
 });
 
-// Activación: Borra versiones antiguas de caché para liberar espacio
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-      );
-    })
-  );
-});
-
-// Estrategia: Network First (Prioriza internet para ver noticias nuevas)
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   event.respondWith(
-    fetch(event.request).catch(() => {
-      return caches.match(event.request);
-    })
+    caches.match(event.request)
+      .then(cachedResponse => {
+        if (cachedResponse) return cachedResponse;
+        
+        return fetch(event.request).then(fetchResponse => {
+          return caches.open(DYNAMIC_CACHE).then(cache => {
+            cache.put(event.request.url, fetchResponse.clone());
+            return fetchResponse;
+          });
+        });
+      })
   );
 });
+
 
 
 
