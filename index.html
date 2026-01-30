@@ -85,27 +85,27 @@
 </main>
 
 <script>
-    // LISTA EXTENSA PARA DETECCIÓN PRECISA
-    const artists = ['BTS', 'BLACKPINK', 'TWICE', 'STRAY KIDS', 'NEWJEANS', 'AESPA', 'SEVENTEEN', 'IVE', 'NCT', 'ITZY', 'RED VELVET', 'TXT', 'ENHYPEN', 'LE SSERAFIM', 'JENNIE', 'LISA', 'JISOO', 'ROSE', 'JUNGKOOK', 'JIMIN', 'V', 'SUGA', 'J-HOPE', 'RM', 'JIN'];
+    const artists = ['BTS', 'BLACKPINK', 'TWICE', 'STRAY KIDS', 'NEWJEANS', 'AESPA', 'SEVENTEEN', 'IVE', 'NCT', 'ITZY', 'RED VELVET', 'TXT', 'ENHYPEN', 'LE SSERAFIM', 'LISA', 'JENNIE', 'JISOO', 'ROSE', 'JUNGKOOK'];
 
     function showTab(tabId) {
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
+        if(event) event.currentTarget.classList.add('active');
     }
 
-    // BUSCADOR DE IMÁGENES ÚNICAS POR ARTISTA
-    function getUniqueImg(title, index) {
-        let keyword = "kpop";
+    // LÓGICA DE IMAGEN FIJA Y ÚNICA
+    function getRelevantFixedImg(title) {
+        let detected = "kpop";
         for (let name of artists) {
             if (title.toUpperCase().includes(name)) {
-                keyword = name.toLowerCase().replace(" ", "");
+                detected = name.toLowerCase().replace(" ", "");
                 break;
             }
         }
-        // Usamos Unsplash con parámetros de búsqueda y semilla única para que no se repitan
-        return `https://source.unsplash.com/featured/600x400?${keyword},music&sig=${index}`;
+        // Usamos una semilla basada en el título para que la imagen sea SIEMPRE la misma para esa noticia
+        const seed = btoa(title).substring(0, 10); 
+        return `https://loremflickr.com/600/400/${detected},music,kpop/all?lock=${seed}`;
     }
 
     async function fetchKPopNews() {
@@ -114,13 +114,11 @@
             const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.soompi.com/feed&t=${Date.now()}`);
             const data = await res.json();
             feed.innerHTML = '';
-            data.items.forEach((item, i) => {
-                // Prioridad 1: Imagen del feed. Prioridad 2: Imagen única del artista.
-                let imgSource = item.thumbnail || item.enclosure.link || getUniqueImg(item.title, i);
-                
+            data.items.forEach((item) => {
+                let imgSource = item.thumbnail || item.enclosure.link || getRelevantFixedImg(item.title);
                 feed.innerHTML += `
                     <div class="item-card">
-                        <img src="${imgSource}" class="item-img" onerror="this.src='${getUniqueImg(item.title, i+10)}'">
+                        <img src="${imgSource}" class="item-img" onerror="this.onerror=null; this.src='${getRelevantFixedImg(item.title)}';">
                         <div style="padding:15px;">
                             <div style="font-weight:700; color:var(--p); font-size:0.95rem;">${item.title}</div>
                             <button class="btn-unlock" style="margin-top:15px;" onclick="handleUnlock('${item.link}')"> DESBLOQUEAR NOTICIA</button>
