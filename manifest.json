@@ -1,20 +1,26 @@
 {
+  "short_name": "TotalKPop",
   "name": "TOTAL K-POP Global",
-  "short_name": "TotalKpop",
-  "start_url": "/", 
-  "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#bb86fc",
+  "description": "Noticias, videos y fotos de K-Pop en tiempo real",
   "icons": [
     {
-      "src": "icon-512.png",
-      "sizes": "512x512",
+      "src": "https://via.placeholder.com/192x192/bb86fc/ffffff?text=KPOP",
       "type": "image/png",
-      "purpose": "any maskable"
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/bb86fc/ffffff?text=TOTAL+KPOP",
+      "type": "image/png",
+      "sizes": "512x512"
     }
-  ]
+  ],
+  "start_url": "/index.html",
+  "background_color": "#0a0a0a",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#bb86fc",
+  "orientation": "portrait"
 }
-
 
 
 

@@ -1,21 +1,38 @@
-const CACHE_NAME = 'kpop-cache-v1';
-const urlsToCache = [
+// Incrementa este número (v1.1, v1.2, etc.) cada vez que hagas un cambio en el HTML/CSS
+const CACHE_NAME = 'total-kpop-v1.1';
+const assets = [
   '/',
   '/index.html',
-  'https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap'
+  // Añade aquí otros archivos locales como iconos si los tienes
 ];
 
-self.addEventListener('install', event => {
+// Instalación: Limpia el caché viejo automáticamente
+self.addEventListener('install', (event) => {
+  self.skipWaiting(); 
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(assets);
+    })
   );
 });
 
-self.addEventListener('fetch', event => {
+// Activación: Borra versiones antiguas de caché para liberar espacio
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+      );
+    })
+  );
+});
+
+// Estrategia: Network First (Prioriza internet para ver noticias nuevas)
+self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
+    fetch(event.request).catch(() => {
+      return caches.match(event.request);
+    })
   );
 });
 
