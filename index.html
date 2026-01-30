@@ -3,106 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>K-POP MASTER PRO - SEÑOR CHARLES</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet" />
+    <title>TOTAL K-POP MASTER - SEÑOR CHARLES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    
     <style>
-        :root { --p: #bb86fc; --b: #000; --c: #121212; --gold: #D4AF37; }
+        :root { --p: #bb86fc; --b: #000; --c: #121212; --t: #fff; --gold: #D4AF37; --gold-light: #FFD700; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; background: var(--b); color: #fff; overflow-x: hidden; }
+        body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); overflow-x: hidden; }
         
-        /* PUBLICIDAD FIJA */
-        .ad-top { background: var(--gold); color: #000; text-align: center; padding: 12px; font-weight: 900; font-size: 0.7rem; position: sticky; top: 0; z-index: 9000; cursor: pointer; }
+        /* MONETIZACIÓN FIJA */
+        .ad-sticky { background: var(--gold); color: #000; text-align: center; padding: 10px; font-weight: 900; font-size: 0.7rem; position: sticky; top: 0; z-index: 5000; cursor: pointer; text-transform: uppercase; }
 
-        .header { background: #1a1a1a; padding: 20px; text-align: center; border-bottom: 2px solid var(--p); }
-        .nav { display: flex; background: #000; position: sticky; top: 43px; z-index: 8000; border-bottom: 1px solid #333; }
-        .tab { flex: 1; padding: 15px; text-align: center; font-size: 0.7rem; font-weight: 700; color: #666; cursor: pointer; text-transform: uppercase; }
-        .tab.active { color: var(--p); border-bottom: 3px solid var(--p); background: rgba(187,134,252,0.1); }
+        .header-main { background: linear-gradient(180deg, #4a148c 0%, #000 100%); padding: 25px 20px; text-align: center; border-bottom: 2px solid var(--p); }
+        .brand { font-size: 1.6rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
 
-        .container { padding: 15px; max-width: 600px; margin: auto; }
-        .card { background: var(--c); border-radius: 15px; margin-bottom: 30px; border: 1px solid #222; overflow: hidden; }
-        .media-box { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; }
-        .media-box img { width: 100%; height: 100%; object-fit: cover; }
+        .nav-tabs { display: flex; overflow-x: auto; background: #000; position: sticky; top: 37px; z-index: 4000; border-bottom: 1px solid #333; scrollbar-width: none; }
+        .tab-link { padding: 15px 25px; color: #666; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; white-space: nowrap; flex: 1; text-align: center; }
+        .tab-link.active { color: var(--p); border-bottom: 3px solid var(--p); background: rgba(187,134,252,0.1); }
+
+        .item-card { background: var(--c); border-radius: 15px; margin: 20px 15px 35px; border: 1px solid #222; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .video-wrapper { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; }
+        .video-thumb { width: 100%; height: 100%; object-fit: cover; }
         
-        .info { padding: 15px; }
-        .btn-main { background: linear-gradient(135deg, var(--gold), #FFD700); color: #000; width: 100%; border: none; padding: 15px; font-weight: 900; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
+        .action-footer { padding: 18px; background: #1a1a1a; }
+        .btn-unlock-gold { 
+            background: linear-gradient(145deg, var(--gold), var(--gold-light)); 
+            color: #000; padding: 16px; width: 100%; border: none; font-weight: 900; 
+            border-radius: 10px; cursor: pointer; font-size: 0.9rem; text-transform: uppercase;
+        }
 
-        /* OVERLAY PARA FOTOS FULLSCREEN */
-        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; }
-        #overlay img { max-width: 95%; max-height: 80%; border: 2px solid var(--gold); }
+        /* MODAL DE FOTOS */
+        #fs-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 6000; flex-direction: column; align-items: center; justify-content: center; }
+        #fs-img { max-width: 90%; max-height: 75%; border: 2px solid var(--gold); }
     </style>
 </head>
 <body>
 
-<div class="ad-top" onclick="money()"> CLIC AQUÍ: RECLAMAR BONO SEMANAL (VES/USD) </div>
+<div class="ad-sticky" onclick="money()"> ¡BONO EXCLUSIVO 2026! CLIC PARA RECLAMAR USD/VES </div>
 
-<header class="header"><h1 style="font-size:1.2rem;">TOTAL K-POP MASTER</h1></header>
+<header class="header-main">
+    <div class="brand">TOTAL <span style="color:var(--p)">K-POP</span> MASTER</div>
+</header>
 
-<nav class="nav">
-    <div class="tab active" onclick="setTab('v', this)"> VIDEOS</div>
-    <div class="tab" onclick="setTab('p', this)"> FOTOS</div>
-    <div class="tab" onclick="money()"> SUGERIR</div>
+<nav class="nav-tabs">
+    <div class="tab-link active" onclick="tab('videos', this)"> VIDEOS MUSICALES</div>
+    <div class="tab-link" onclick="tab('photos', this)"> FOTOS REALES</div>
+    <div class="tab-link" onclick="money()"> SUGERIR</div>
 </nav>
 
-<main class="container" id="feed"></main>
+<main id="main-feed"></main>
 
-<div id="overlay">
-    <span onclick="closeOverlay()" style="position:absolute; top:20px; right:20px; font-size:2rem; cursor:pointer;">×</span>
-    <img id="over-img" src="">
-    <button class="btn-main" style="width:200px; margin-top:20px;" onclick="money()"> DESCARGAR</button>
+<div id="fs-overlay">
+    <span onclick="closeFs()" style="position:absolute; top:20px; right:20px; color:white; font-size:2rem; cursor:pointer;">×</span>
+    <img id="fs-img" src="">
+    <button class="btn-unlock-gold" style="width:250px; margin-top:20px;" onclick="money()"> DESCARGAR HD</button>
 </div>
 
 <script>
-    const adUrl = "https://otieu.com/4/10534539";
-    const vids = [
-        {n:'BTS - Dynamite', id:'gdZLi9hhLVM'}, {n:'Blackpink - Pink Venom', id:'gQlMMD8auRo'},
-        {n:'Jungkook - Seven', id:'QU9c0053UAU'}, {n:'LISA - Money', id:'dNCWe_6HAM8'},
-        {n:'Stray Kids - S-Class', id:'JsOOis4bBFg'}, {n:'Twice - Moonlight', id:'9vS2m9O8-iU'}
+    const videoDb = [
+        { n: 'BTS - Dynamite', id: 'gdZLi9hhLVM' }, { n: 'BLACKPINK - Pink Venom', id: 'gQlMMD8auRo' },
+        { n: 'Jimin - Like Crazy', id: 'nOnofzYAsTo' }, { n: 'Jungkook - Seven', id: 'QU9c0053UAU' },
+        { n: 'Stray Kids - LALALALA', id: 'POe9SOEKotk' }, { n: 'NewJeans - OMG', id: 'sVTy_wno5as' },
+        { n: 'Lisa - Lalisa', id: 'awkkyBH2zEo' }, { n: 'Twice - Fancy', id: 'kOHB85vDuow' }
     ];
-    
-    let currentTab = 'v';
-    let activeVid = null;
-    let usedIds = new Set();
+
+    let activePlayer = null;
+    let currentTab = 'videos';
+    let shownIds = new Set();
+    const adUrl = "https://otieu.com/4/10534539";
 
     function money() { window.open(adUrl, '_blank'); }
 
-    function setTab(t, el) {
-        document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    function tab(type, el) {
+        document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
         el.classList.add('active');
-        currentTab = t;
-        document.getElementById('feed').innerHTML = '';
-        usedIds.clear();
-        load();
+        currentTab = type;
+        document.getElementById('main-feed').innerHTML = '';
+        shownIds.clear();
+        hodorEngine();
+        window.scrollTo(0,0);
     }
 
-    function load() {
-        const feed = document.getElementById('feed');
+    function hodorEngine() {
+        const feed = document.getElementById('main-feed');
         let html = '';
-        
+
         for(let i=0; i<6; i++) {
-            const data = vids[Math.floor(Math.random()*vids.length)];
+            const data = videoDb[Math.floor(Math.random() * videoDb.length)];
             const rid = Math.random().toString(36).substr(2,9);
-            
-            if(currentTab === 'v') {
+
+            if (currentTab === 'videos') {
                 const thumb = `https://img.youtube.com/vi/${data.id}/hqdefault.jpg`;
                 html += `
-                <div class="card" id="${rid}">
-                    <div class="media-box">
-                        <img src="${thumb}">
+                <div class="item-card" id="${rid}">
+                    <div class="video-wrapper">
+                        <img src="${thumb}" class="video-thumb">
                     </div>
-                    <div class="info">
-                        <p style="font-weight:bold; margin-bottom:10px;">${data.n}</p>
-                        <button class="btn-main" onclick="play('${data.id}', '${rid}')"> VER VIDEO OFICIAL</button>
+                    <div class="action-footer">
+                        <div style="font-weight:900; color:var(--p); margin-bottom:12px;">${data.n}</div>
+                        <button class="btn-unlock-gold" onclick="unlockVideo('${data.id}', '${rid}')"> VER VIDEO OFICIAL</button>
                     </div>
                 </div>`;
             } else {
-                const img = `https://picsum.photos/seed/${rid}/800/1200`;
+                const imgUrl = `https://picsum.photos/seed/${rid}/800/1200`;
                 html += `
-                <div class="card">
-                    <div class="media-box" style="aspect-ratio:1/1;">
-                        <img src="${img}" onclick="openImg('${img}')">
+                <div class="item-card">
+                    <div class="video-wrapper" style="aspect-ratio:1/1;">
+                        <img src="${imgUrl}" class="video-thumb" onclick="openPhoto('${imgUrl}')">
                     </div>
-                    <div class="info">
-                        <button class="btn-main" onclick="openImg('${img}')"> AMPLIAR / DESCARGAR</button>
+                    <div class="action-footer">
+                        <button class="btn-unlock-gold" onclick="openPhoto('${imgUrl}')"> AMPLIAR Y DESCARGAR</button>
                     </div>
                 </div>`;
             }
@@ -110,32 +120,47 @@
         feed.insertAdjacentHTML('beforeend', html);
     }
 
-    function play(id, cardId) {
-        if(activeVid) {
-            const old = document.getElementById(activeVid.cardId);
-            if(old) old.querySelector('.media-box').innerHTML = `<img src="${activeVid.thumb}">`;
+    function unlockVideo(id, cardId) {
+        if (activePlayer) {
+            const old = document.getElementById(activePlayer.cardId);
+            if (old) {
+                old.querySelector('.video-wrapper').innerHTML = `<img src="${activePlayer.thumb}" class="video-thumb">`;
+                old.querySelector('.btn-unlock-gold').style.display = 'block';
+            }
         }
         money();
         const card = document.getElementById(cardId);
-        const box = card.querySelector('.media-box');
-        const thumb = box.querySelector('img').src;
-        box.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" style="width:100%; height:100%; position:absolute;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-        activeVid = {cardId, thumb};
+        const wrapper = card.querySelector('.video-wrapper');
+        const thumb = wrapper.querySelector('.video-thumb').src;
+        wrapper.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" style="width:100%; height:100%; position:absolute;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        card.querySelector('.btn-unlock-gold').style.display = 'none';
+        activePlayer = { cardId, thumb };
     }
 
-    function openImg(src) {
+    function openPhoto(url) {
         money();
-        document.getElementById('over-img').src = src;
-        document.getElementById('overlay').style.display = 'flex';
+        document.getElementById('fs-img').src = url;
+        document.getElementById('fs-overlay').style.display = 'flex';
     }
 
-    function closeOverlay() { document.getElementById('overlay').style.display = 'none'; }
+    function closeFs() { document.getElementById('fs-overlay').style.display = 'none'; }
 
     window.onscroll = () => {
-        if((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 800) load();
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000) hodorEngine();
     };
 
-    window.onload = load;
+    window.onload = hodorEngine;
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
