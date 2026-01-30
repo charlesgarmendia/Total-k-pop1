@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOTAL K-POP Global</title>
-    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#bb86fc">
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet" />
     <style>
         :root { --p: #bb86fc; --b: #0a0a0a; --c: #1e1e1e; --t: #ffffff; --fluorescent: #ccff00; --orange: #e65100; --blue: #00d2ff; }
@@ -17,17 +15,19 @@
         .header-kpop { 
             width: 100%; height: 100px; 
             background: radial-gradient(circle at top right, #4a148c, #000 90%); 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             border-bottom: 2px solid var(--p);
         }
         .brand-name { font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
         .brand-name span { color: var(--p); }
 
-        .btn-install-fluorescent {
+        /* BOTÓN INSTALAR - Inicialmente oculto */
+        #btn-install {
+            display: none; 
             background: var(--fluorescent); color: #000; border: none; padding: 15px; 
             width: 90%; max-width: 450px; border-radius: 50px; font-weight: 900;
             font-size: 0.9rem; text-transform: uppercase; cursor: pointer;
-            display: block; margin: 15px auto; box-shadow: 0 0 20px var(--fluorescent);
+            margin: 15px auto; box-shadow: 0 0 20px var(--fluorescent);
             animation: pulse-yellow 2s infinite; text-align: center;
         }
         @keyframes pulse-yellow { 0% { transform: scale(1); } 70% { transform: scale(1.05); } 100% { transform: scale(1); } }
@@ -46,7 +46,7 @@
         .content-section.active { display: block; }
 
         .item-card { background: var(--c); border-radius: 20px; margin-bottom: 20px; overflow: hidden; border: 1px solid #252525; }
-        .item-img { width: 100%; height: 200px; object-fit: cover; background: #222; }
+        .item-img { width: 100%; height: 220px; object-fit: cover; display: block; background: #222; }
         
         .btn-unlock { 
             background: linear-gradient(to right, #f1c40f, var(--orange)); 
@@ -56,16 +56,12 @@
 
         .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .photo-item { border-radius: 12px; overflow: hidden; height: 180px; position: relative; cursor: pointer; border: 1px solid #333; }
-        .photo-item img { width: 100%; height: 100%; object-fit: cover; filter: blur(10px); }
+        .photo-item img { width: 100%; height: 100%; object-fit: cover; filter: blur(15px); transition: 0.5s; }
         .photo-item.unlocked img { filter: blur(0); }
-        .lock-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+        .lock-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
         .photo-item.unlocked .lock-overlay { display: none; }
 
-        /* CALENDARIO AUTOMÁTICO */
-        .event-card { background: #111; border-left: 4px solid var(--blue); padding: 15px; margin-bottom: 10px; border-radius: 8px; animation: slideIn 0.3s ease-out; }
-        .event-tag { color: var(--blue); font-weight: 900; font-size: 0.7rem; text-transform: uppercase; }
-        .event-title { font-weight: 700; font-size: 0.9rem; margin-top: 5px; color: #fff; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+        .event-card { background: #111; border-left: 4px solid var(--blue); padding: 15px; margin-bottom: 10px; border-radius: 8px; }
     </style>
 </head>
 <body>
@@ -81,7 +77,7 @@
     <div class="tab-button" onclick="showTab('tab-events')">📅 EVENTOS</div>
 </div>
 
-<button id="btn-install" class="btn-install-fluorescent">⚡ INSTALAR APP K-POP ⚡</button>
+<button id="btn-install" onclick="installApp()">⚡ INSTALAR APP K-POP ⚡</button>
 
 <main>
     <section id="tab-news" class="content-section active"><div id="news-feed"></div></section>
@@ -91,13 +87,57 @@
 </main>
 
 <script>
-    const fallbackImg = "https://images.unsplash.com/photo-1590212151175-e58edd96185b?auto=format&fit=crop&w=500&q=80";
+    const kpopGroups = ['BTS', 'BLACKPINK', 'TWICE', 'STRAY KIDS', 'NEWJEANS', 'AESPA', 'SEVENTEEN', 'IVE', 'NCT', 'ITZY', 'RED VELVET', 'TXT', 'ENHYPEN', 'LE SSERAFIM'];
+    let deferredPrompt;
+
+    // DETECCIÓN DE INSTALACIÓN
+    function checkInstallation() {
+        const isApp = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        const installBtn = document.getElementById('btn-install');
+        
+        if (!isApp) {
+            // Solo se muestra si estamos en el navegador web
+            installBtn.style.display = 'block';
+        } else {
+            // Si ya es la App instalada, se asegura de que esté oculto
+            installBtn.style.display = 'none';
+        }
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+    });
+
+    async function installApp() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                document.getElementById('btn-install').style.display = 'none';
+            }
+            deferredPrompt = null;
+        } else {
+            alert("Para instalar: Toca los tres puntos de tu navegador y selecciona 'Instalar aplicación' o 'Agregar a pantalla de inicio'.");
+        }
+    }
 
     function showTab(tabId) {
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         event.currentTarget.classList.add('active');
+    }
+
+    function getRelevantImg(title) {
+        let detected = "kpop";
+        for (let group of kpopGroups) {
+            if (title.toUpperCase().includes(group)) {
+                detected = group.toLowerCase().replace(" ", "");
+                break;
+            }
+        }
+        return `https://loremflickr.com/600/400/${detected},kpop/all`;
     }
 
     async function fetchKPopNews() {
@@ -107,10 +147,17 @@
             const data = await res.json();
             feed.innerHTML = '';
             data.items.forEach(item => {
-                let imgUrl = item.thumbnail || item.enclosure.link || fallbackImg;
-                feed.innerHTML += `<div class="item-card"><img src="${imgUrl}" class="item-img" onerror="this.src='${fallbackImg}'"><div style="padding:15px;"><div style="font-weight:700; color:var(--p); font-size:0.9rem;">${item.title}</div><button class="btn-unlock" style="margin-top:10px;" onclick="handleUnlock('${item.link}')">🔓 DESBLOQUEAR NOTICIA</button></div></div>`;
+                let imgSource = item.enclosure.link || item.thumbnail || getRelevantImg(item.title);
+                feed.innerHTML += `
+                    <div class="item-card">
+                        <img src="${imgSource}" class="item-img" onerror="this.src='${getRelevantImg(item.title)}'">
+                        <div style="padding:15px;">
+                            <div style="font-weight:700; color:var(--p); font-size:0.95rem;">${item.title}</div>
+                            <button class="btn-unlock" style="margin-top:15px;" onclick="handleUnlock('${item.link}')">🔓 DESBLOQUEAR NOTICIA</button>
+                        </div>
+                    </div>`;
             });
-        } catch (e) { feed.innerHTML = "<p>Cargando noticias...</p>"; }
+        } catch (e) { }
     }
 
     async function fetchKPopVideos() {
@@ -127,30 +174,17 @@
         } catch (e) { }
     }
 
-    // NUEVO: CALENDARIO AUTOMÁTICO BASADO EN EVENTOS REALES
     async function fetchKPopEvents() {
         const eFeed = document.getElementById('events-feed');
         try {
-            // Buscamos noticias específicas de "Tours" y "Comebacks" para el calendario
             const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.soompi.com/tag/concert/feed&t=${Date.now()}`);
             const data = await res.json();
             eFeed.innerHTML = '';
-            
-            if(data.items.length === 0) {
-                eFeed.innerHTML = "<div class='event-card'><div class='event-tag'>Sincronizando</div><div class='event-title'>Buscando eventos oficiales...</div></div>";
-            }
-
             data.items.slice(0, 10).forEach(item => {
-                // Extraer fecha simplificada del post
-                const date = new Date(item.pubDate).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
-                eFeed.innerHTML += `
-                    <div class="event-card">
-                        <div class="event-tag">Confirmado • ${date}</div>
-                        <div class="event-title">${item.title}</div>
-                        <a href="javascript:void(0)" onclick="handleUnlock('${item.link}')" style="color:var(--blue); font-size:0.7rem; text-decoration:none; font-weight:bold;">VER DETALLES ➔</a>
-                    </div>`;
+                const date = new Date(item.pubDate).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
+                eFeed.innerHTML += `<div class="event-card"><div style="color:var(--blue); font-weight:900; font-size:0.7rem;">EVENTO • ${date}</div><div style="font-weight:700; font-size:0.9rem; margin:5px 0;">${item.title}</div><a href="javascript:void(0)" onclick="handleUnlock('${item.link}')" style="color:var(--p); font-size:0.7rem; text-decoration:none; font-weight:bold;">MÁS INFO ➔</a></div>`;
             });
-        } catch (e) { eFeed.innerHTML = "<p>Actualizando calendario global...</p>"; }
+        } catch (e) { }
     }
 
     function handleUnlock(url) {
@@ -181,6 +215,7 @@
     }
 
     window.onload = () => { 
+        checkInstallation(); // Verificamos si ocultar el botón
         fetchKPopNews(); 
         fetchKPopVideos();
         fetchKPopEvents();
@@ -189,7 +224,6 @@
 </script>
 </body>
 </html>
-
 
 
 
