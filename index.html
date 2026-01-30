@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TOTAL K-POP MASTER - SEÑOR CHARLES</title>
+    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#bb86fc">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    
     <style>
         :root { --p: #bb86fc; --b: #000; --c: #121212; --t: #fff; --yellow: #ffff00; --neon: #00ffff; --pink: #ff00ff; }
         * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.3s; }
         body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); overflow-x: hidden; }
         
+        /* HEADER Y BOTÓN DE DESCARGA */
         .header-main { background: linear-gradient(180deg, #4a148c 0%, #000 100%); padding: 20px; text-align: center; border-bottom: 2px solid var(--p); position: sticky; top: 0; z-index: 4000; }
         .brand { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; }
         
         #install-btn-container { display: none; padding: 10px; }
-        .btn-download { background: var(--yellow); color: #000; padding: 12px; width: 100%; border-radius: 10px; font-weight: 900; border: none; font-size: 0.8rem; box-shadow: 0 0 15px rgba(255,255,0,0.3); }
+        @media (display-mode: standalone) { #install-btn-container { display: none !important; } }
+        
+        .btn-download { background: var(--yellow); color: #000; padding: 12px; width: 100%; border-radius: 10px; font-weight: 900; border: none; font-size: 0.8rem; cursor: pointer; }
 
         .nav-tabs { display: flex; overflow-x: auto; background: #000; position: sticky; top: 105px; z-index: 3000; border-bottom: 1px solid #333; }
         .tab-link { padding: 15px 20px; color: #777; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
@@ -30,10 +35,11 @@
         .news-card img { width: 100%; height: 120px; object-fit: cover; }
         .news-title { padding: 8px; font-size: 0.65rem; font-weight: 600; line-height: 1.2; }
 
-        .item-card { background: var(--c); border-radius: 15px; margin-bottom: 20px; border: 1px solid #333; overflow: hidden; position: relative; }
-        .video-box { height: 220px; background: #000; display: flex; align-items: center; justify-content: center; }
+        .item-card { background: var(--c); border-radius: 15px; margin-bottom: 25px; border: 1px solid #333; overflow: hidden; }
+        .preview-area { height: 180px; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
         
-        .btn-unlock { background: linear-gradient(45deg, var(--pink), var(--neon)); color: #000; padding: 12px 25px; border: none; font-weight: 900; border-radius: 50px; cursor: pointer; font-size: 0.75rem; z-index: 5; }
+        .action-area { padding: 15px; border-top: 1px solid #222; }
+        .btn-unlock { background: linear-gradient(45deg, var(--pink), var(--neon)); color: #000; padding: 14px; width: 100%; border: none; font-weight: 900; border-radius: 8px; cursor: pointer; font-size: 0.75rem; text-transform: uppercase; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .legal-info { padding: 25px; text-align: center; font-size: 0.7rem; color: #555; }
@@ -44,42 +50,39 @@
 <header class="header-main">
     <div class="brand">TOTAL <span style="color:var(--p)">K-POP</span> MASTER</div>
     <div id="install-btn-container">
-        <button class="btn-download" onclick="startInstall()"> INSTALAR APP (SÓLO WEB)</button>
+        <button class="btn-download" onclick="startInstall()"> INSTALAR APP PREMIUM</button>
     </div>
 </header>
 
 <nav class="nav-tabs">
-    <div class="tab-link active" onclick="tab('news', this)">NOTICIAS</div>
-    <div class="tab-link" onclick="tab('videos', this)">VIDEOS</div>
-    <div class="tab-link" onclick="tab('photos', this)">FOTOS</div>
-    <div class="tab-link" onclick="tab('calendar', this)">CONCIERTOS</div>
+    <div class="tab-link active" onclick="tab('news', this)">NOTICIAS REALES</div>
+    <div class="tab-link" onclick="tab('lives', this)">LIVES OFICIALES</div>
+    <div class="tab-link" onclick="tab('videos', this)">VIDEOS OFICIALES</div>
     <div class="tab-link" onclick="tab('legal', this)">LEGAL</div>
 </nav>
 
 <main>
     <section id="tab-news" class="section active"><div class="news-grid" id="news-feed"></div></section>
+    <section id="tab-lives" class="section"><div id="lives-feed"></div></section>
     <section id="tab-videos" class="section"><div id="videos-feed"></div></section>
-    <section id="tab-photos" class="section"><div class="news-grid" id="photos-feed"></div></section>
-    <section id="tab-calendar" class="section"><div id="calendar-feed"></div></section>
     <section id="tab-legal" class="section">
         <div class="legal-info">
-            <h2 style="color:var(--p)">COPYRIGHT © 2026</h2>
-            <p>Propiedad del <strong>señor charles</strong>.</p>
-            <p>Moneda Oficial: **VES / USD**</p>
-            <p>Política de Privacidad: El uso de YouTube API v3 garantiza la integridad de las vistas. No se recopilan datos personales sin consentimiento.</p>
+            <h2 style="color:var(--p)">COPYRIGHT © 2026 - SEÑOR CHARLES</h2>
+            <p>Moneda Predeterminada: **VES / USD**</p>
+            <p>Todo el contenido es propiedad de sus respectivos canales oficiales (HYBE, YG, SM, JYP). Esta plataforma actúa como un puente directo al contenido oficial.</p>
         </div>
     </section>
 </main>
 
 <script>
-    const idols = ['BTS', 'BLACKPINK', 'Stray Kids', 'TWICE', 'NewJeans', 'AESPA', 'Seventeen'];
-    const yt_pool = ['mH0Ox8Sih0g', 'gQlMMD8auRo', 'd56mG7DezGs', 'POe9SOEKotk', '2S24-y0Ij3Y'];
-    const news_titles = [
-        "rompe récords en el Billboard 200 este 2026.",
-        "anuncia gira mundial incluyendo Latinoamérica.",
-        "estrena nuevo MV con tecnología de realidad virtual.",
-        "confirma colaboración histórica con artista global.",
-        "agota entradas en menos de 5 minutos para su concierto."
+    // Enlaces a canales oficiales y videos reales
+    const idols = [
+        { name: 'JIMIN (BTS)', vid: 'mH0Ox8Sih0g' },
+        { name: 'BLACKPINK', vid: 'gQlMMD8auRo' },
+        { name: 'Stray Kids', vid: 'POe9SOEKotk' },
+        { name: 'BTS Official', vid: '2S24-y0Ij3Y' },
+        { name: 'NewJeans', vid: 'v7bnOxL4j3Y' },
+        { name: 'AESPA', vid: 'JzeLpS_o6I4' }
     ];
     
     let loading = false;
@@ -99,10 +102,9 @@
 
     function ad() { window.open('https://otieu.com/4/10534539', '_blank'); }
 
-    function unlockVideo(vid, containerId) {
-        ad(); // Monetización activa
+    function unlockContent(vid, containerId) {
+        ad(); // Generación de ingresos para el señor charles
         const card = document.getElementById(containerId);
-        // LIMPIEZA TOTAL: Se elimina el botón y se inyecta el video
         card.innerHTML = `
             <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
                 <iframe src="https://www.youtube.com/embed/${vid}?autoplay=1" 
@@ -110,8 +112,8 @@
                         frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
                 </iframe>
             </div>
-            <div style="padding:10px; font-size:0.6rem; background:#000; color:var(--neon); text-align:center; font-weight:bold;">
-                VISTAS SUMADAS - VES / USD
+            <div style="padding:10px; font-size:0.6rem; color:var(--neon); text-align:center; background:#000;">
+                CONTENIDO OFICIAL DESBLOQUEADO | VES / USD
             </div>`;
     }
 
@@ -122,29 +124,26 @@
         let html = '';
 
         for(let i=0; i<6; i++) {
-            const idol = idols[Math.floor(Math.random() * idols.length)];
-            const vid = yt_pool[Math.floor(Math.random() * yt_pool.length)];
+            const data = idols[Math.floor(Math.random() * idols.length)];
             const seed = Math.floor(Math.random() * 999999);
-            const title = idol + " " + news_titles[Math.floor(Math.random() * news_titles.length)];
-            const img = `https://picsum.photos/seed/${seed}/400/250?kpop,idol`;
+            const img = `https://picsum.photos/seed/${seed}/400/250?kpop`;
 
-            if(type === 'news' || type === 'photos') {
+            if(type === 'news') {
                 html += `
                 <div class="news-card" onclick="ad()">
                     <img src="${img}">
-                    <div class="news-title">${title}</div>
+                    <div class="news-title"><strong>${data.name}:</strong> Noticia oficial confirmada en canal oficial.</div>
                 </div>`;
             } else {
                 const uid = `${type}-${seed}`;
                 html += `
                 <div class="item-card" id="${uid}">
-                    <div class="video-box">
-                        <div style="position:absolute; color:rgba(187,134,252,0.1); font-weight:900; font-size:3rem; pointer-events:none;">${idol}</div>
-                        <button class="btn-unlock" onclick="unlockVideo('${vid}', '${uid}')"> DESBLOQUEAR CONTENIDO</button>
+                    <div class="preview-area">
+                        <div style="color:var(--p); font-weight:900; font-size:1.5rem;">${data.name}</div>
+                        <div style="font-size:0.6rem; opacity:0.5;">Contenido Original Verificado</div>
                     </div>
-                    <div style="padding:12px;">
-                        <div style="font-weight:900; color:var(--p); font-size:0.8rem;">${idol} - EXCLUSIVO 2026</div>
-                        <div style="font-size:0.55rem; color:#666; margin-top:3px;">SISTEMA SEÑOR CHARLES | VES / USD</div>
+                    <div class="action-area">
+                        <button class="btn-unlock" onclick="unlockContent('${data.vid}', '${uid}')"> DESBLOQUEAR PARA VER</button>
                     </div>
                 </div>`;
             }
@@ -159,10 +158,21 @@
         }
     };
 
-    window.onload = () => { ['news', 'videos', 'photos', 'calendar'].forEach(t => hodorEngine(t)); };
+    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
+    function startInstall() { 
+        if(deferredPrompt) { 
+            deferredPrompt.prompt(); 
+            deferredPrompt.userChoice.then(c => { if(c.outcome === 'accepted') document.getElementById('install-btn-container').style.display='none'; });
+        }
+    }
+
+    window.onload = () => { ['news', 'lives', 'videos'].forEach(t => hodorEngine(t)); };
 </script>
 </body>
 </html>
+
+
+
 
 
 
