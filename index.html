@@ -80,11 +80,14 @@
         .cal-card { background: #1a1a1a; border-radius: 15px; padding: 18px; margin-bottom: 15px; border-left: 5px solid var(--p); display: flex; align-items: center; }
         .cal-date { background: var(--p); color: #000; padding: 10px; border-radius: 10px; text-align: center; min-width: 60px; font-weight: 900; margin-right: 20px; font-size: 0.9rem; line-height: 1; }
 
-        /* BOTONES */
+        /* BOTONES LLAMATIVOS Y COLORIDOS CORREGIDOS */
         .btn-action { 
-            background: linear-gradient(45deg, #f1c40f, #e67e22); color: #000; 
-            padding: 14px; width: 100%; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; border-radius: 10px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; 
+            padding: 14px; width: 100%; border: none; font-weight: 900; cursor: pointer; 
+            text-transform: uppercase; font-size: 0.85rem; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 0, 255, 0.4); border: 2px solid #fff;
         }
+        .btn-action:active { transform: scale(0.95); }
 
         .loader-info { text-align: center; padding: 40px; color: var(--p); font-weight: 900; font-size: 0.8rem; letter-spacing: 2px; }
 
@@ -145,7 +148,7 @@
         window.scrollTo(0,0);
     }
 
-    // EL MOTOR HODOR SUPREMO - CARGA INFINITA AGRESIVA (50 ELEMENTOS)
+    // EL MOTOR HODOR SUPREMO CORREGIDO - CARGA INFINITA AGRESIVA
     function hodorEngine(type) {
         if(loading) return;
         loading = true;
@@ -156,22 +159,22 @@
         for(let i=0; i<50; i++) {
             counters[type]++;
             const idol = idols[Math.floor(Math.random() * idols.length)];
-            const seed = counters[type] + Math.floor(Math.random() * 8000);
-            // Generador de imagen única por semilla
-            const img = `https://loremflickr.com/500/400/kpop,${idol.replace(' ','')}/all?sig=${seed}`;
+            // Semilla única usando performance.now para evitar imágenes repetidas
+            const uniqueSeed = Math.floor(Math.random() * 100000) + i + performance.now();
+            const img = `https://picsum.photos/seed/${uniqueSeed}/500/400`;
 
             if(type === 'news') {
                 container.innerHTML += `<div class="news-card" onclick="unlockLink()"><img src="${img}"><div class="news-title">${idol}: Noticia Exclusiva #${counters.news} del 2026.</div></div>`;
             } else if(type === 'lives') {
                 container.innerHTML += `<div class="item-card"><div class="badge-live"> EN VIVO</div><img src="${img}" class="item-img"><div style="padding:15px;"><div style="font-weight:900;">${idol} LIVE STREAMING</div><button class="btn-action" onclick="unlockVideo(this)"> ENTRAR AL LIVE</button></div></div>`;
             } else if(type === 'concerts') {
-                container.innerHTML += `<div class="item-card"><img src="https://loremflickr.com/500/400/concert,kpop/all?sig=${seed}" class="item-img"><div style="padding:15px;"><div style="font-weight:900;">${idol} - WORLD TOUR 2026</div><button class="btn-action" onclick="unlockVideo(this)"> VER CONCIERTO</button></div></div>`;
+                container.innerHTML += `<div class="item-card"><img src="${img}" class="item-img"><div style="padding:15px;"><div style="font-weight:900;">${idol} - WORLD TOUR 2026</div><button class="btn-action" onclick="unlockVideo(this)"> VER CONCIERTO</button></div></div>`;
             } else if(type === 'videos') {
-                container.innerHTML += `<div class="item-card"><img src="https://loremflickr.com/500/400/musicvideo,kpop/all?sig=${seed}" class="item-img"><div style="padding:15px;"><div style="font-weight:900;">${idol} OFFICIAL MUSIC VIDEO</div><button class="btn-action" onclick="unlockVideo(this)"> REPRODUCIR</button></div></div>`;
+                container.innerHTML += `<div class="item-card"><img src="${img}" class="item-img"><div style="padding:15px;"><div style="font-weight:900;">${idol} OFFICIAL MUSIC VIDEO</div><button class="btn-action" onclick="unlockVideo(this)"> REPRODUCIR HD</button></div></div>`;
             } else if(type === 'photos') {
-                container.innerHTML += `<div class="news-card photo-card" id="pc-${counters.photos}"><img src="${img}"><button class="btn-action" onclick="unlockAsset(${counters.photos})"> VER HD</button></div>`;
+                container.innerHTML += `<div class="news-card photo-card" id="pc-${counters.photos}"><img src="${img}"><div style="padding:10px;"><button class="btn-action" onclick="unlockAsset(${counters.photos})"> VER EN 4K</button></div></div>`;
             } else if(type === 'calendar') {
-                container.innerHTML += `<div class="cal-card"><div class="cal-date">MAR<br>${(i%28)+1}</div><div><div style="font-weight:900; font-size:0.9rem;">${idol} FAN MEETING</div><div style="font-size:0.7rem; color:var(--p);">Boletos: **VES / USD**</div></div></div>`;
+                container.innerHTML += `<div class="cal-card"><div class="cal-date">FEB<br>${(i%28)+1}</div><div><div style="font-weight:900; font-size:0.9rem;">${idol} EVENTO 2026</div><div style="font-size:0.7rem; color:var(--p);">Precio: **VES / USD**</div><button class="btn-action" style="padding:5px 10px; margin-top:5px; font-size:0.6rem; width:auto;">RESERVAR</button></div></div>`;
             }
         }
         loading = false;
@@ -203,9 +206,15 @@
     function unlockLink() { window.open('https://otieu.com/4/10534539', '_blank'); }
 
     window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('install-banner').style.display = 'block'; });
+    
+    // LÓGICA DE INSTALACIÓN CORREGIDA PARA DESCARGA DE APP
     function triggerInstall() { 
-        if(deferredPrompt) { deferredPrompt.prompt(); } 
-        else { alert("Menu > Instalar Aplicación"); }
+        if(deferredPrompt) { 
+            deferredPrompt.prompt(); 
+        } else { 
+            alert("Iniciando descarga de Total K-Pop Master APK...");
+            window.location.href = '#'; // Sustituir por enlace real al archivo .apk
+        }
     }
     document.getElementById('btnInstall').addEventListener('click', triggerInstall);
 
@@ -216,3 +225,13 @@
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
