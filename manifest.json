@@ -1,0 +1,25 @@
+{
+  "name": "TOTAL K-POP Global",
+  "short_name": "TotalKpop",
+  "start_url": "/", 
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#bb86fc",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
+
+
+
+
+
+
+
+
