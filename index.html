@@ -10,7 +10,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet" />
     <style>
-        :root { --p: #bb86fc; --b: #0a0a0a; --c: #1e1e1e; --t: #ffffff; --fluorescent: #ccff00; --orange: #e65100; --blue: #00d2ff; --g: #2ecc71; }
+        :root { --p: #bb86fc; --b: #0a0a0a; --c: #1e1e1e; --t: #ffffff; --fluorescent: #ccff00; --orange: #e65100; --blue: #00d2ff; }
         * { box-sizing: border-box; outline: none; transition: 0.3s; }
         body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); margin: 0; padding-bottom: 80px; }
         
@@ -23,18 +23,21 @@
         .brand-name { font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
         .brand-name span { color: var(--p); }
 
-        .search-container { width: 90%; max-width: 500px; margin: 15px auto; position: relative; }
-        .search-input { 
-            width: 100%; padding: 12px 20px; border-radius: 30px; border: 1px solid #333; 
-            background: var(--c); color: #fff; font-size: 0.9rem;
+        .btn-install-fluorescent {
+            background: var(--fluorescent); color: #000; border: none; padding: 15px; 
+            width: 90%; max-width: 450px; border-radius: 50px; font-weight: 900;
+            font-size: 0.9rem; text-transform: uppercase; cursor: pointer;
+            display: block; margin: 15px auto; box-shadow: 0 0 20px var(--fluorescent);
+            animation: pulse-yellow 2s infinite; text-align: center;
         }
+        @keyframes pulse-yellow { 0% { transform: scale(1); } 70% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
         .tabs-container {
             display: flex; justify-content: space-around; background: #000;
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333;
         }
         .tab-button {
-            padding: 15px; color: #888; font-weight: 700; font-size: 0.75rem;
+            padding: 15px; color: #888; font-weight: 700; font-size: 0.7rem;
             text-transform: uppercase; cursor: pointer; border-bottom: 3px solid transparent;
         }
         .tab-button.active { color: var(--p); border-bottom: 3px solid var(--p); }
@@ -42,42 +45,27 @@
         .content-section { display: none; padding: 15px; width: 100%; max-width: 500px; margin: auto; }
         .content-section.active { display: block; }
 
-        .btn-install-fluorescent {
-            background: var(--fluorescent); color: #000; border: none; padding: 15px; 
-            width: 90%; max-width: 450px; border-radius: 50px; font-weight: 900;
-            font-size: 0.9rem; text-transform: uppercase; cursor: pointer;
-            display: none; margin: 15px auto; box-shadow: 0 0 15px var(--fluorescent);
-            animation: pulse-yellow 2s infinite; text-align: center;
-        }
-        @keyframes pulse-yellow { 0% { transform: scale(1); } 70% { transform: scale(1.03); } 100% { transform: scale(1); } }
-
-        .btn-global-support {
-            background: linear-gradient(45deg, var(--blue), #9d50bb);
-            color: #fff; border: none; padding: 12px; width: 90%; border-radius: 12px;
-            font-weight: 900; text-decoration: none; display: block; text-align: center;
-            margin: 10px auto 20px; font-size: 0.8rem; box-shadow: 0 4px 10px rgba(0,210,255,0.2);
-        }
-
-        .item-card { background: var(--c); border-radius: 20px; margin-bottom: 20px; overflow: hidden; border: 1px solid #252525; animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .item-card { background: var(--c); border-radius: 20px; margin-bottom: 20px; overflow: hidden; border: 1px solid #252525; }
+        .item-img { width: 100%; height: 200px; object-fit: cover; background: #222; }
         
-        .item-img { width: 100%; height: 180px; object-fit: cover; background: #111; }
-        .item-info { padding: 15px; }
         .btn-unlock { 
             background: linear-gradient(to right, #f1c40f, var(--orange)); 
             color: #000; padding: 12px; width: 100%; border-radius: 10px; 
-            font-weight: 900; text-decoration: none; display: block; text-align: center;
-            margin-top: 10px; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; border:none;
+            font-weight: 900; text-transform: uppercase; cursor: pointer; border:none; display: block; text-align: center; text-decoration: none;
         }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .photo-item { border-radius: 12px; overflow: hidden; height: 160px; position: relative; cursor: pointer; border: 1px solid #333; background: #111; }
-        .photo-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
-        .lock-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .photo-item { border-radius: 12px; overflow: hidden; height: 180px; position: relative; cursor: pointer; border: 1px solid #333; }
+        .photo-item img { width: 100%; height: 100%; object-fit: cover; filter: blur(10px); }
+        .photo-item.unlocked img { filter: blur(0); }
+        .lock-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+        .photo-item.unlocked .lock-overlay { display: none; }
 
-        .legal-box { font-size: 0.65rem; color: #555; padding: 25px; text-align: justify; border-top: 1px solid #222; }
-        
-        .loading-spinner { text-align: center; padding: 20px; color: var(--p); font-weight: bold; }
+        /* CALENDARIO AUTOMÁTICO */
+        .event-card { background: #111; border-left: 4px solid var(--blue); padding: 15px; margin-bottom: 10px; border-radius: 8px; animation: slideIn 0.3s ease-out; }
+        .event-tag { color: var(--blue); font-weight: 900; font-size: 0.7rem; text-transform: uppercase; }
+        .event-title { font-weight: 700; font-size: 0.9rem; margin-top: 5px; color: #fff; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
     </style>
 </head>
 <body>
@@ -87,68 +75,23 @@
 </header>
 
 <div class="tabs-container">
-    <div class="tab-button active" onclick="showTab('tab-news')">📰 <span class="lang-news"></span></div>
-    <div class="tab-button" onclick="showTab('tab-videos')">📺 <span class="lang-videos"></span></div>
-    <div class="tab-button" onclick="showTab('tab-photos')">📸 <span class="lang-photos"></span></div>
+    <div class="tab-button active" onclick="showTab('tab-news')">📰 NOTICIAS</div>
+    <div class="tab-button" onclick="showTab('tab-videos')">📺 VIDEOS</div>
+    <div class="tab-button" onclick="showTab('tab-photos')">📸 FOTOS</div>
+    <div class="tab-button" onclick="showTab('tab-events')">📅 EVENTOS</div>
 </div>
 
-<div class="search-container">
-    <input type="text" id="main-search" class="search-input" placeholder="" onkeyup="filterContent()">
-</div>
-
-<button id="btn-install" class="btn-install-fluorescent">⚡ <span class="lang-install"></span> ⚡</button>
+<button id="btn-install" class="btn-install-fluorescent">⚡ INSTALAR APP K-POP ⚡</button>
 
 <main>
-    <a href="https://otieu.com/4/10534539" target="_blank" class="btn-global-support">💎 <span class="lang-support"></span> 💎</a>
-
-    <section id="tab-news" class="content-section active">
-        <div id="news-feed" class="loading-spinner">Sincronizando Seúl...</div>
-    </section>
-
-    <section id="tab-videos" class="content-section">
-        <div id="videos-feed" class="loading-spinner">Buscando Estrenos...</div>
-    </section>
-
-    <section id="tab-photos" class="content-section">
-        <div class="gallery-grid" id="photos-feed"></div>
-        <a href="https://otieu.com/4/10534539" target="_blank" class="btn-unlock" style="margin-top:20px; background:var(--fluorescent); color:#000;">🔓 <span class="lang-unlock-gallery"></span></a>
-    </section>
-
-    <section class="legal-box">
-        <p id="legal-text"></p>
-        <p style="text-align:center;">
-            <a href="privacy.html" style="color:var(--p); text-decoration:none; font-weight:bold;">Leer Política de Privacidad Completa</a>
-        </p>
-    </section>
+    <section id="tab-news" class="content-section active"><div id="news-feed"></div></section>
+    <section id="tab-videos" class="content-section"><div id="videos-feed"></div></section>
+    <section id="tab-photos" class="content-section"><div class="gallery-grid" id="photos-feed"></div></section>
+    <section id="tab-events" class="content-section"><div id="events-feed"></div></section>
 </main>
 
 <script>
-    const userLang = navigator.language || navigator.userLanguage;
-    const isEn = userLang.startsWith('en');
-
-    const texts = {
-        news: isEn ? "NEWS" : "NOTICIAS",
-        videos: isEn ? "VIDEOS" : "VIDEOS",
-        photos: isEn ? "PHOTOS" : "FOTOS",
-        install: isEn ? "INSTALL K-POP APP" : "INSTALAR APP K-POP",
-        support: isEn ? "SUPPORT OUR APP" : "APOYA NUESTRA APP",
-        unlockBtn: isEn ? "UNLOCK VIDEO" : "DESBLOQUEAR VIDEO",
-        unlockNews: isEn ? "UNLOCK NEWS" : "DESBLOQUEAR NOTICIA",
-        unlockGallery: isEn ? "VIEW MORE HD PHOTOS" : "VER MÁS FOTOS HD",
-        searchPlaceholder: isEn ? "Search groups, idols..." : "Buscar grupos, idols...",
-        legal: isEn ? "<b>LEGAL NOTICE:</b> TOTAL K-POP Global is an information portal. By clicking 'Unlock', you are redirected to official sources. We do not claim ownership of the media shown. We use <b>Monetag</b> to finance this service." : "<b>AVISO LEGAL:</b> TOTAL K-POP Global es un portal de curación informativo. Al hacer clic en 'Desbloquear', usted es redirigido a la fuente oficial. No reclamamos propiedad sobre el contenido multimedia mostrado. Utilizamos <b>Monetag</b> para financiar este servicio gratuito."
-    };
-
-    function initTexts() {
-        document.querySelector('.lang-news').innerText = texts.news;
-        document.querySelector('.lang-videos').innerText = texts.videos;
-        document.querySelector('.lang-photos').innerText = texts.photos;
-        document.querySelector('.lang-install').innerText = texts.install;
-        document.querySelector('.lang-support').innerText = texts.support;
-        document.querySelector('.lang-unlock-gallery').innerText = texts.unlockGallery;
-        document.getElementById('legal-text').innerHTML = texts.legal;
-        document.getElementById('main-search').placeholder = texts.searchPlaceholder;
-    }
+    const fallbackImg = "https://images.unsplash.com/photo-1590212151175-e58edd96185b?auto=format&fit=crop&w=500&q=80";
 
     function showTab(tabId) {
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
@@ -157,124 +100,98 @@
         event.currentTarget.classList.add('active');
     }
 
-    function filterContent() {
-        let input = document.getElementById('main-search').value.toLowerCase();
-        let cards = document.querySelectorAll('.item-card');
-        cards.forEach(card => {
-            let text = card.innerText.toLowerCase();
-            card.style.display = text.includes(input) ? "block" : "none";
-        });
-    }
-
-    // CARGA DE NOTICIAS (DINÁMICA)
     async function fetchKPopNews() {
         const feed = document.getElementById('news-feed');
         try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.soompi.com/feed&t=${new Date().getTime()}`);
+            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.soompi.com/feed&t=${Date.now()}`);
             const data = await res.json();
-            if(data.status !== 'ok') throw new Error();
-
             feed.innerHTML = '';
             data.items.forEach(item => {
-                let img = item.enclosure.link || item.thumbnail || 'https://via.placeholder.com/400x200';
-                feed.innerHTML += `
-                    <div class="item-card">
-                        <img src="${img}" class="item-img" onerror="this.src='https://via.placeholder.com/400x200'">
-                        <div class="item-info">
-                            <div class="title-text" style="font-weight:700; color:var(--p); margin-bottom:5px; font-size:0.9rem;">${item.title}</div>
-                            <button class="btn-unlock" onclick="handleUnlock('${item.link}')">🔓 ${texts.unlockNews}</button>
-                        </div>
-                    </div>`;
+                let imgUrl = item.thumbnail || item.enclosure.link || fallbackImg;
+                feed.innerHTML += `<div class="item-card"><img src="${imgUrl}" class="item-img" onerror="this.src='${fallbackImg}'"><div style="padding:15px;"><div style="font-weight:700; color:var(--p); font-size:0.9rem;">${item.title}</div><button class="btn-unlock" style="margin-top:10px;" onclick="handleUnlock('${item.link}')">🔓 DESBLOQUEAR NOTICIA</button></div></div>`;
             });
-        } catch (e) { 
-            feed.innerHTML = "<p style='text-align:center;'>Error de conexión. Reintentando...</p>"; 
-        }
+        } catch (e) { feed.innerHTML = "<p>Cargando noticias...</p>"; }
     }
 
-    // CARGA DE VIDEOS (DINÁMICA DESDE YOUTUBE RSS)
     async function fetchKPopVideos() {
         const vFeed = document.getElementById('videos-feed');
         try {
-            // Canal de SMTOWN (uno de los más activos) para obtener videos reales nuevos
             const rssUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=UCEf_Bc-KVd7onSeifS3py9g";
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&t=${new Date().getTime()}`);
+            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
             const data = await res.json();
-
-            if(data.status !== 'ok') throw new Error();
-
             vFeed.innerHTML = '';
             data.items.forEach(item => {
                 const vidId = item.link.split('v=')[1];
-                vFeed.innerHTML += `
-                    <div class="item-card">
-                        <img src="https://img.youtube.com/vi/${vidId}/maxresdefault.jpg" class="item-img">
-                        <div class="item-info">
-                            <div class="title-text" style="font-weight:700; font-size:0.9rem;">${item.title}</div>
-                            <button class="btn-unlock" onclick="revelarVideo(this, '${vidId}')">🔓 ${texts.unlockBtn}</button>
-                        </div>
+                vFeed.innerHTML += `<div class="item-card"><img src="https://img.youtube.com/vi/${vidId}/maxresdefault.jpg" class="item-img"><div style="padding:15px;"><div style="font-weight:700; font-size:0.9rem;">${item.title}</div><button class="btn-unlock" style="margin-top:10px;" onclick="revelarVideo(this, '${vidId}')">🔓 DESBLOQUEAR VIDEO</button></div></div>`;
+            });
+        } catch (e) { }
+    }
+
+    // NUEVO: CALENDARIO AUTOMÁTICO BASADO EN EVENTOS REALES
+    async function fetchKPopEvents() {
+        const eFeed = document.getElementById('events-feed');
+        try {
+            // Buscamos noticias específicas de "Tours" y "Comebacks" para el calendario
+            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.soompi.com/tag/concert/feed&t=${Date.now()}`);
+            const data = await res.json();
+            eFeed.innerHTML = '';
+            
+            if(data.items.length === 0) {
+                eFeed.innerHTML = "<div class='event-card'><div class='event-tag'>Sincronizando</div><div class='event-title'>Buscando eventos oficiales...</div></div>";
+            }
+
+            data.items.slice(0, 10).forEach(item => {
+                // Extraer fecha simplificada del post
+                const date = new Date(item.pubDate).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+                eFeed.innerHTML += `
+                    <div class="event-card">
+                        <div class="event-tag">Confirmado • ${date}</div>
+                        <div class="event-title">${item.title}</div>
+                        <a href="javascript:void(0)" onclick="handleUnlock('${item.link}')" style="color:var(--blue); font-size:0.7rem; text-decoration:none; font-weight:bold;">VER DETALLES ➔</a>
                     </div>`;
             });
-        } catch (e) {
-            vFeed.innerHTML = "<p style='text-align:center;'>Error al cargar videos.</p>";
-        }
+        } catch (e) { eFeed.innerHTML = "<p>Actualizando calendario global...</p>"; }
     }
 
     function handleUnlock(url) {
         window.open('https://otieu.com/4/10534539', '_blank');
-        setTimeout(() => { window.location.href = url; }, 1500);
+        setTimeout(() => { window.location.href = url; }, 1200);
     }
 
     function revelarVideo(btn, vidId) {
         window.open('https://otieu.com/4/10534539', '_blank');
         const card = btn.closest('.item-card');
-        btn.innerText = "CARGANDO...";
         setTimeout(() => {
-            card.innerHTML = `<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:20px;"><iframe src="https://www.youtube.com/embed/${vidId}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
-        }, 1500);
+            card.innerHTML = `<iframe src="https://www.youtube.com/embed/${vidId}?autoplay=1" style="width:100%; height:250px; border:0;" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        }, 1200);
     }
 
     function loadPhotos() {
         const photosFeed = document.getElementById('photos-feed');
+        const groups = ['bts', 'blackpink', 'twice', 'straykids', 'aespa', 'ive', 'seventeen', 'nct'];
         photosFeed.innerHTML = '';
-        const groups = ['bts', 'blackpink', 'twice', 'straykids', 'newjeans', 'seventeen', 'aespa', 'itzy', 'nct', 'redvelvet'];
-        groups.sort(() => Math.random() - 0.5); // Aleatorizar fotos
         groups.forEach((group, i) => {
-            photosFeed.innerHTML += `
-                <div class="photo-item" onclick="window.open('https://otieu.com/4/10534539', '_blank')">
-                    <img src="https://loremflickr.com/400/500/${group},kpop?random=${i + Math.random()}">
-                    <div class="lock-overlay"><span>🔒</span></div>
-                </div>`;
+            photosFeed.innerHTML += `<div class="photo-item" id="photo-${i}" onclick="unlockPhoto(${i})"><img src="https://loremflickr.com/400/600/${group},kpop?random=${i}"><div class="lock-overlay">🔒</div></div>`;
         });
     }
 
+    function unlockPhoto(id) {
+        window.open('https://otieu.com/4/10534539', '_blank');
+        document.getElementById(`photo-${id}`).classList.add('unlocked');
+    }
+
     window.onload = () => { 
-        initTexts();
         fetchKPopNews(); 
         fetchKPopVideos();
+        fetchKPopEvents();
         loadPhotos(); 
-        setInterval(fetchKPopNews, 600000); 
     };
-
-    // PWA Logic
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault(); 
-        deferredPrompt = e;
-        document.getElementById('btn-install').style.display = 'block';
-    });
-    
-    document.getElementById('btn-install').addEventListener('click', () => {
-        if (deferredPrompt) { 
-            deferredPrompt.prompt(); 
-            deferredPrompt.userChoice.then(() => {
-                document.getElementById('btn-install').style.display = 'none';
-                deferredPrompt = null;
-            });
-        }
-    });
 </script>
 </body>
 </html>
+
+
+
 
 
 
