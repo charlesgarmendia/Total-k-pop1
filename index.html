@@ -160,12 +160,12 @@ function play(btn) {
 
     btn.innerText = "CONECTANDO AL CANAL...";
    
-            setTimeout(() => {
+                setTimeout(() => {
         btn.closest('.item-card').innerHTML = `
             <iframe 
                 width="100%" 
                 height="240" 
-                src="https://www.youtube.com/embed/${videoId}" 
+                src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
                 title="YouTube player" 
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -175,7 +175,6 @@ function play(btn) {
                 Suma de vistas activa. Moneda: **VES / USD**
             </div>`;
     }, 1200);
-
 }
 
     function ad() { window.open('https://otieu.com/4/10534539', '_blank'); }
