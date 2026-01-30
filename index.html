@@ -4,48 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TOTAL K-POP MASTER - SEÑOR CHARLES</title>
-    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#bb86fc">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
-    
     <style>
         :root { --p: #bb86fc; --b: #000; --c: #121212; --t: #fff; --yellow: #ffff00; --neon: #00ffff; --pink: #ff00ff; }
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.3s; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); padding-bottom: 20px; overflow-x: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.3s; }
+        body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); overflow-x: hidden; }
         
-        .header-main { 
-            background: linear-gradient(180deg, #4a148c 0%, #000 100%); padding: 20px 15px; 
-            text-align: center; border-bottom: 2px solid var(--p); position: sticky; top: 0; z-index: 4000;
-        }
-        .brand { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .header-main { background: linear-gradient(180deg, #4a148c 0%, #000 100%); padding: 20px; text-align: center; border-bottom: 2px solid var(--p); position: sticky; top: 0; z-index: 4000; }
+        .brand { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; }
         
-        /* BOTÓN INTELIGENTE: DESAPARECE EN PWA */
-        #install-btn-container { display: none; padding: 10px; text-align: center; }
-        .btn-download { background: var(--yellow); color: #000; padding: 15px; width: 100%; border-radius: 12px; font-weight: 900; border: none; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 20px rgba(255,255,0,0.3); font-size: 0.8rem; margin-top: 10px; }
+        #install-btn-container { display: none; padding: 10px; }
+        .btn-download { background: var(--yellow); color: #000; padding: 12px; width: 100%; border-radius: 10px; font-weight: 900; border: none; font-size: 0.8rem; box-shadow: 0 0 15px rgba(255,255,0,0.3); }
 
-        .nav-tabs { display: flex; overflow-x: auto; background: #000; position: sticky; top: 110px; z-index: 3000; border-bottom: 1px solid #333; scrollbar-width: none; }
+        .nav-tabs { display: flex; overflow-x: auto; background: #000; position: sticky; top: 105px; z-index: 3000; border-bottom: 1px solid #333; }
         .tab-link { padding: 15px 20px; color: #777; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
         .tab-link.active { color: var(--p); border-bottom: 3px solid var(--p); background: rgba(187,134,252,0.1); }
 
         .section { display: none; padding: 15px; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* GRID INFINITO */
-        .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .news-card { background: var(--c); border-radius: 15px; overflow: hidden; border: 1px solid #222; position: relative; }
-        .news-card img { width: 100%; height: 160px; object-fit: cover; background: #1a1a1a; }
-        .news-title { padding: 10px; font-size: 0.7rem; font-weight: 700; color: #eee; line-height: 1.3; }
+        .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .news-card { background: var(--c); border-radius: 12px; overflow: hidden; border: 1px solid #222; }
+        .news-card img { width: 100%; height: 120px; object-fit: cover; }
+        .news-title { padding: 8px; font-size: 0.65rem; font-weight: 600; line-height: 1.2; }
 
-        .item-card { background: var(--c); border-radius: 20px; margin-bottom: 30px; border: 1px solid #333; overflow: hidden; }
-        .video-placeholder { height: 240px; background: #000; display: flex; align-items: center; justify-content: center; position: relative; }
+        .item-card { background: var(--c); border-radius: 15px; margin-bottom: 20px; border: 1px solid #333; overflow: hidden; position: relative; }
+        .video-box { height: 220px; background: #000; display: flex; align-items: center; justify-content: center; }
+        
+        .btn-unlock { background: linear-gradient(45deg, var(--pink), var(--neon)); color: #000; padding: 12px 25px; border: none; font-weight: 900; border-radius: 50px; cursor: pointer; font-size: 0.75rem; z-index: 5; }
 
-        .btn-unlock { background: linear-gradient(45deg, var(--pink), var(--neon)); color: #000; padding: 15px 30px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; border-radius: 50px; font-size: 0.8rem; box-shadow: 0 0 15px var(--neon); }
-
-        .legal-info { padding: 30px; text-align: center; font-size: 0.75rem; color: #666; line-height: 1.8; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .legal-info { padding: 25px; text-align: center; font-size: 0.7rem; color: #555; }
     </style>
 </head>
 <body>
@@ -53,16 +44,16 @@
 <header class="header-main">
     <div class="brand">TOTAL <span style="color:var(--p)">K-POP</span> MASTER</div>
     <div id="install-btn-container">
-        <button class="btn-download" onclick="startInstall()"> INSTALAR APP PREMIUM</button>
+        <button class="btn-download" onclick="startInstall()"> INSTALAR APP (SÓLO WEB)</button>
     </div>
 </header>
 
 <nav class="nav-tabs">
-    <div class="tab-link active" onclick="tab('news', this)"> NOTICIAS</div>
-    <div class="tab-link" onclick="tab('videos', this)"> VIDEOS</div>
-    <div class="tab-link" onclick="tab('photos', this)"> FOTOS</div>
-    <div class="tab-link" onclick="tab('calendar', this)"> CONCIERTOS</div>
-    <div class="tab-link" onclick="tab('legal', this)"> LEGAL</div>
+    <div class="tab-link active" onclick="tab('news', this)">NOTICIAS</div>
+    <div class="tab-link" onclick="tab('videos', this)">VIDEOS</div>
+    <div class="tab-link" onclick="tab('photos', this)">FOTOS</div>
+    <div class="tab-link" onclick="tab('calendar', this)">CONCIERTOS</div>
+    <div class="tab-link" onclick="tab('legal', this)">LEGAL</div>
 </nav>
 
 <main>
@@ -72,25 +63,28 @@
     <section id="tab-calendar" class="section"><div id="calendar-feed"></div></section>
     <section id="tab-legal" class="section">
         <div class="legal-info">
-            <h2 style="color:var(--p)">POLÍTICA Y COPYRIGHT 2026</h2>
-            <p>Propiedad Intelectual de: <strong>señor charles</strong>.</p>
-            <p>Moneda Predeterminada: **VES / USD**</p>
-            <p>Esta aplicación utiliza la API de YouTube v3 para la suma de visualizaciones. Todo el contenido está sujeto a derechos de autor del **señor charles**. Se prohíbe la reproducción total o parcial sin autorización.</p>
-            <br>
-            <p style="opacity:0.5">Versión 2.0.1 - Flujo Infinito Activado</p>
+            <h2 style="color:var(--p)">COPYRIGHT © 2026</h2>
+            <p>Propiedad del <strong>señor charles</strong>.</p>
+            <p>Moneda Oficial: **VES / USD**</p>
+            <p>Política de Privacidad: El uso de YouTube API v3 garantiza la integridad de las vistas. No se recopilan datos personales sin consentimiento.</p>
         </div>
     </section>
 </main>
 
 <script>
-    // Prioridad para los más famosos
-    const idols = ['BTS', 'BLACKPINK', 'Stray Kids', 'TWICE', 'NewJeans', 'AESPA', 'Seventeen', 'ITZY', 'IVE', 'TXT'];
-    const yt_pool = ['mH0Ox8Sih0g', 'gQlMMD8auRo', 'd56mG7DezGs', 'POe9SOEKotk', '2S24-y0Ij3Y', 'v7bnOxL4j3Y', 'JzeLpS_o6I4'];
+    const idols = ['BTS', 'BLACKPINK', 'Stray Kids', 'TWICE', 'NewJeans', 'AESPA', 'Seventeen'];
+    const yt_pool = ['mH0Ox8Sih0g', 'gQlMMD8auRo', 'd56mG7DezGs', 'POe9SOEKotk', '2S24-y0Ij3Y'];
+    const news_titles = [
+        "rompe récords en el Billboard 200 este 2026.",
+        "anuncia gira mundial incluyendo Latinoamérica.",
+        "estrena nuevo MV con tecnología de realidad virtual.",
+        "confirma colaboración histórica con artista global.",
+        "agota entradas en menos de 5 minutos para su concierto."
+    ];
     
     let loading = false;
     let deferredPrompt;
 
-    // Detector Inteligente de PWA
     if (!window.matchMedia('(display-mode: standalone)').matches) {
         document.getElementById('install-btn-container').style.display = 'block';
     }
@@ -105,38 +99,52 @@
 
     function ad() { window.open('https://otieu.com/4/10534539', '_blank'); }
 
-    // Motor Automático e Infinito
+    function unlockVideo(vid, containerId) {
+        ad(); // Monetización activa
+        const card = document.getElementById(containerId);
+        // LIMPIEZA TOTAL: Se elimina el botón y se inyecta el video
+        card.innerHTML = `
+            <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
+                <iframe src="https://www.youtube.com/embed/${vid}?autoplay=1" 
+                        style="position:absolute; top:0; left:0; width:100%; height:100%;" 
+                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+                </iframe>
+            </div>
+            <div style="padding:10px; font-size:0.6rem; background:#000; color:var(--neon); text-align:center; font-weight:bold;">
+                VISTAS SUMADAS - VES / USD
+            </div>`;
+    }
+
     function hodorEngine(type) {
         if(loading || type === 'legal') return;
         loading = true;
         const feed = document.getElementById(type + '-feed');
         let html = '';
 
-        for(let i=0; i<8; i++) {
+        for(let i=0; i<6; i++) {
             const idol = idols[Math.floor(Math.random() * idols.length)];
             const vid = yt_pool[Math.floor(Math.random() * yt_pool.length)];
             const seed = Math.floor(Math.random() * 999999);
-            const img = `https://picsum.photos/seed/${seed}/600/600?kpop-${idol}`;
+            const title = idol + " " + news_titles[Math.floor(Math.random() * news_titles.length)];
+            const img = `https://picsum.photos/seed/${seed}/400/250?kpop,idol`;
 
             if(type === 'news' || type === 'photos') {
                 html += `
                 <div class="news-card" onclick="ad()">
-                    <img src="${img}" loading="lazy">
-                    <div class="news-title">${idol}: Galería y Novedades 2026.</div>
-                    ${type === 'photos' ? '<div style="position:absolute;top:5px;right:5px;background:var(--yellow);color:#000;font-size:0.5rem;padding:2px 5px;font-weight:900;border-radius:4px;">HD</div>' : ''}
+                    <img src="${img}">
+                    <div class="news-title">${title}</div>
                 </div>`;
-            } 
-            else if(type === 'videos' || type === 'calendar') {
-                const uniqueId = `vid-${seed}`;
+            } else {
+                const uid = `${type}-${seed}`;
                 html += `
-                <div class="item-card" id="${uniqueId}">
-                    <div class="video-placeholder">
-                        <div style="position:absolute; color:rgba(255,255,255,0.1); font-weight:900; font-size:3rem;">${idol}</div>
-                        <button class="btn-unlock" onclick="unlockVideo('${vid}', '${uniqueId}')"> DESBLOQUEAR ${type === 'calendar' ? 'CONCIERTO' : 'VIDEO'}</button>
+                <div class="item-card" id="${uid}">
+                    <div class="video-box">
+                        <div style="position:absolute; color:rgba(187,134,252,0.1); font-weight:900; font-size:3rem; pointer-events:none;">${idol}</div>
+                        <button class="btn-unlock" onclick="unlockVideo('${vid}', '${uid}')"> DESBLOQUEAR CONTENIDO</button>
                     </div>
-                    <div style="padding:15px;">
-                        <div style="font-weight:900; color:var(--neon);">${idol} - ${type === 'calendar' ? 'WORLD TOUR 2026' : 'MUSIC VIDEO'}</div>
-                        <div style="font-size:0.6rem; color:#666; margin-top:5px;">SUMANDO VISTAS | MONEDA: **VES / USD**</div>
+                    <div style="padding:12px;">
+                        <div style="font-weight:900; color:var(--p); font-size:0.8rem;">${idol} - EXCLUSIVO 2026</div>
+                        <div style="font-size:0.55rem; color:#666; margin-top:3px;">SISTEMA SEÑOR CHARLES | VES / USD</div>
                     </div>
                 </div>`;
             }
@@ -145,38 +153,16 @@
         loading = false;
     }
 
-    function unlockVideo(vid, containerId) {
-        ad(); // Ganancia para el señor charles
-        const container = document.getElementById(containerId).querySelector('.video-placeholder');
-        container.innerHTML = `
-            <iframe width="100%" height="240" src="https://www.youtube.com/embed/${vid}?autoplay=1" 
-            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        `;
-    }
-
-    // Scroll Infinito
     window.onscroll = () => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000) {
-            const activeTab = document.querySelector('.section.active').id.replace('tab-', '');
-            hodorEngine(activeTab);
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 900) {
+            hodorEngine(document.querySelector('.section.active').id.replace('tab-', ''));
         }
     };
-
-    // Instalación PWA
-    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
-    function startInstall() { 
-        if(deferredPrompt) { 
-            deferredPrompt.prompt(); 
-            deferredPrompt.userChoice.then(c => { if(c.outcome === 'accepted') document.getElementById('install-btn-container').style.display='none'; });
-        }
-    }
 
     window.onload = () => { ['news', 'videos', 'photos', 'calendar'].forEach(t => hodorEngine(t)); };
 </script>
 </body>
 </html>
-
-
 
 
 
