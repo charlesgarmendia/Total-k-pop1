@@ -57,21 +57,24 @@
             display: block; text-align: center; text-decoration: none;
         }
 
+        /* GALERÍA MEJORADA */
         .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .photo-item { background: var(--c); border-radius: 15px; overflow: hidden; border: 1px solid #333; }
-        .img-container { height: 180px; overflow: hidden; position: relative; }
-        .photo-img { width: 100%; height: 100%; object-fit: cover; filter: blur(4px); } 
-        .photo-item.unlocked .photo-img { filter: blur(0); }
+        .img-container { height: 200px; overflow: hidden; position: relative; cursor: pointer; }
+        .photo-img { width: 100%; height: 100%; object-fit: cover; filter: blur(6px); transition: 0.5s; } 
+        .photo-item.unlocked .photo-img { filter: blur(0); transform: scale(1.05); }
         
         .photo-footer { padding: 10px; text-align: center; }
         .btn-photo-unlock { 
             font-size: 0.65rem; background: var(--p); color: #000; border: none; 
             padding: 8px; border-radius: 5px; font-weight: 900; width: 100%; cursor: pointer;
         }
+        .btn-download { display: none; background: var(--fluorescent); color: #000; font-size: 0.65rem; padding: 8px; border-radius: 5px; font-weight: 900; width: 100%; margin-top: 5px; text-decoration: none; }
+        .photo-item.unlocked .btn-download { display: block; }
+        .photo-item.unlocked .btn-photo-unlock { display: none; }
 
         .event-card { background: #111; border-left: 4px solid var(--blue); padding: 15px; margin-bottom: 10px; border-radius: 8px; }
 
-        /* ESTILOS DEL MENSAJE DE BIENVENIDA */
         #welcome-modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.9);
             z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
@@ -88,10 +91,9 @@
 
 <div id="welcome-modal">
     <div class="modal-content">
-        <h2 style="color:var(--p); margin-top:0;">¡BIENVENIDO!</h2>
-        <p style="font-size: 0.9rem;">Explora las últimas noticias, videos y fotos exclusivas de tus artistas favoritos de K-POP.</p>
-        <p style="font-size: 0.8rem; color: #888;">Toca los botones de desbloqueo para acceder al contenido Premium.</p>
-        <button onclick="closeWelcome()" class="btn-unlock" style="margin-top:20px;">EMPEZAR AHORA</button>
+        <h2 style="color:var(--p); margin-top:0;">¡FANS DE BTS & MÁS!</h2>
+        <p style="font-size: 0.9rem;">Descarga fotos exclusivas en HD y mira las noticias antes que nadie.</p>
+        <button onclick="closeWelcome()" class="btn-unlock" style="margin-top:20px;">ENTRAR AHORA</button>
     </div>
 </div>
 
@@ -119,7 +121,8 @@
 </footer>
 
 <script>
-    const artists = ['BTS', 'BLACKPINK', 'TWICE', 'STRAY KIDS', 'NEWJEANS', 'AESPA', 'LISA', 'JENNIE', 'JUNGKOOK'];
+    // Prioridad BTS y Blackpink
+    const artists = ['BTS', 'BLACKPINK', 'STRAY KIDS', 'JUNGKOOK', 'LISA', 'JENNIE', 'TWICE', 'JIMIN', 'V-BTS', 'NEWJEANS'];
 
     function showTab(tabId) {
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
@@ -128,7 +131,6 @@
         if(event) event.currentTarget.classList.add('active');
     }
 
-    // BIENVENIDA AUTOMÁTICA
     function checkWelcome() {
         if(!localStorage.getItem('welcomeShown')) {
             document.getElementById('welcome-modal').style.display = 'flex';
@@ -139,15 +141,13 @@
         document.getElementById('welcome-modal').style.display = 'none';
     }
 
-    // POLÍTICAS
     function showPrivacy() {
-        alert('POLÍTICA DE PRIVACIDAD: Esta App utiliza cookies para mejorar la experiencia y anuncios de terceros para mantenerse gratuita. No recopilamos datos personales sensibles. Al usar esta App, aceptas nuestros términos.');
+        alert('POLÍTICA DE PRIVACIDAD: Esta App utiliza cookies para mejorar la experiencia y anuncios de terceros.');
     }
 
-    function getSafeImg(title, id) {
-        let keyword = "kpop";
-        for(let a of artists) { if(title.toUpperCase().includes(a)) keyword = a; }
-        return `https://images.weserv.nl/?url=https://loremflickr.com/600/400/${keyword},idol/all?lock=${id}&w=600&h=400&fit=cover`;
+    function getSafeImg(keyword, id) {
+        // Buscamos fotos "frescas" usando etiquetas de tendencia
+        return `https://images.weserv.nl/?url=https://loremflickr.com/800/1000/${keyword},kpop,idol,new/all?lock=${id}&w=800&h=1000&fit=cover`;
     }
 
     async function fetchKPopNews() {
@@ -157,9 +157,11 @@
             const data = await res.json();
             feed.innerHTML = '';
             data.items.forEach((item, i) => {
+                let key = "BTS,Blackpink"; // Default atractivo
+                for(let a of artists) { if(item.title.toUpperCase().includes(a)) { key = a; break; } }
                 feed.innerHTML += `
                     <div class="item-card">
-                        <img src="${getSafeImg(item.title, i)}" class="item-img">
+                        <img src="${getSafeImg(key, i)}" class="item-img">
                         <div class="card-footer">
                             <div class="news-title">${item.title}</div>
                             <button class="btn-unlock" onclick="handleUnlock('${item.link}')"> LEER NOTICIA COMPLETA</button>
@@ -192,15 +194,18 @@
     function loadPhotos() {
         const pFeed = document.getElementById('photos-feed');
         pFeed.innerHTML = '';
-        const groups = ['bts', 'blackpink', 'twice', 'straykids', 'aespa', 'ive', 'lisa', 'jungkook'];
-        groups.forEach((g, i) => {
+        // Inyectamos mayormente bandas famosas
+        const topList = ['bts', 'blackpink', 'jungkook', 'lisa', 'twice', 'straykids', 'v-bts', 'jennie', 'jimin', 'aespa'];
+        topList.forEach((g, i) => {
+            const imgUrl = getSafeImg(g, i+200);
             pFeed.innerHTML += `
                 <div class="photo-item" id="p-${i}">
-                    <div class="img-container">
-                        <img src="${getSafeImg(g, i+50)}" class="photo-img">
+                    <div class="img-container" onclick="unlockPhoto(${i})">
+                        <img src="${imgUrl}" class="photo-img">
                     </div>
                     <div class="photo-footer">
-                        <button class="btn-photo-unlock" onclick="unlockPhoto(${i})"> VER EN HD</button>
+                        <button class="btn-photo-unlock" onclick="unlockPhoto(${i})"> DESBLOQUEAR HD</button>
+                        <a href="${imgUrl}" download="KPOP_HD_${i}.jpg" class="btn-download"> GUARDAR EN GALERÍA</a>
                     </div>
                 </div>`;
         });
@@ -213,7 +218,7 @@
             const data = await res.json();
             eFeed.innerHTML = '';
             data.items.slice(0, 10).forEach(item => {
-                eFeed.innerHTML += `<div class="event-card"><div style="color:var(--blue); font-weight:900; font-size:0.7rem;">CALENDARIO MUNDIAL</div><div style="font-weight:700; font-size:0.85rem; margin:5px 0;">${item.title}</div><button onclick="handleUnlock('${item.link}')" style="background:none; border:none; color:var(--p); font-weight:bold; cursor:pointer; padding:0;">VER DETALLES </button></div>`;
+                eFeed.innerHTML += `<div class="event-card"><div style="color:var(--blue); font-weight:900; font-size:0.7rem;">GLOBAL TOUR 2026</div><div style="font-weight:700; font-size:0.85rem; margin:5px 0;">${item.title}</div><button onclick="handleUnlock('${item.link}')" style="background:none; border:none; color:var(--p); font-weight:bold; cursor:pointer; padding:0;">VER FECHAS </button></div>`;
             });
         } catch (e) { }
     }
@@ -236,19 +241,10 @@
         }, 1500);
     }
 
-    window.onload = () => { 
-        checkWelcome();
-        fetchKPopNews(); 
-        fetchKPopVideos(); 
-        fetchKPopEvents(); 
-        loadPhotos(); 
-    };
+    window.onload = () => { checkWelcome(); fetchKPopNews(); fetchKPopVideos(); fetchKPopEvents(); loadPhotos(); };
 </script>
 </body>
 </html>
-
-
-
 
 
 
