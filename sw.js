@@ -1,4 +1,4 @@
-// Incrementa este número (v1.1, v1.15, etc.) cada vez que hagas un cambio en el HTML/CSS
+// Incrementa este número (v1.1, v1.16, etc.) cada vez que hagas un cambio en el HTML/CSS
 const CACHE_NAME = 'total-kpop-v1.1';
 const assets = [
   '/',

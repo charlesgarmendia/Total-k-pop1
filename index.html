@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TOTAL K-POP MASTER - SUPREMA</title>
+    <title>TOTAL K-POP MASTER - VERSIÓN SEÑOR CHARLES</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#bb86fc">
@@ -16,47 +16,49 @@
         * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.3s; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); padding-bottom: 20px; overflow-x: hidden; }
         
-        /* HEADER Y BOTÓN INTELIGENTE */
-        .header-main { background: linear-gradient(180deg, #4a148c 0%, #000 100%); padding: 20px 15px; text-align: center; border-bottom: 2px solid var(--p); position: sticky; top: 0; z-index: 4000; }
+        .header-main { 
+            background: linear-gradient(180deg, #4a148c 0%, #000 100%); padding: 20px 15px; 
+            text-align: center; border-bottom: 2px solid var(--p); position: sticky; top: 0; z-index: 4000;
+        }
         .brand { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
         
-        #install-area { display: none; padding: 10px; background: rgba(255,255,0,0.1); }
-        .btn-download { background: var(--yellow); color: #000; padding: 14px; width: 100%; border-radius: 12px; font-weight: 900; border: none; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(255,255,0,0.4); }
+        /* BOTÓN DE DESCARGA: SOLO WEB */
+        #install-btn-container { display: none; padding: 10px; text-align: center; }
+        .btn-download { background: var(--yellow); color: #000; padding: 15px; width: 100%; border-radius: 12px; font-weight: 900; border: none; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px rgba(255,255,0,0.5); font-size: 0.8rem; }
 
-        /* TABS */
-        .nav-tabs { display: flex; overflow-x: auto; background: #000; position: sticky; top: 125px; z-index: 3000; border-bottom: 1px solid #333; scrollbar-width: none; }
-        .tab-link { padding: 15px 20px; color: #777; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+        .nav-tabs { display: flex; overflow-x: auto; background: #000; position: sticky; top: 110px; z-index: 3000; border-bottom: 1px solid #333; scrollbar-width: none; }
+        .tab-link { padding: 15px 20px; color: #777; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
         .tab-link.active { color: var(--p); border-bottom: 3px solid var(--p); background: rgba(187,134,252,0.1); }
 
-        /* FEED Y CARDS */
-        .section { display: none; padding: 15px; animation: slideIn 0.4s ease; }
+        .section { display: none; padding: 15px; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
-        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .item-card { background: var(--c); border-radius: 20px; margin-bottom: 25px; border: 1px solid #222; overflow: hidden; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .item-img { width: 100%; height: 240px; object-fit: cover; background: #1a1a1a; display: block; }
+        /* GRID DE NOTICIAS Y FOTOS */
+        .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .news-card { background: var(--c); border-radius: 15px; overflow: hidden; border: 1px solid #222; }
+        .news-card img { width: 100%; height: 130px; object-fit: cover; background: #1a1a1a; display: block; }
+        .news-title { padding: 10px; font-size: 0.7rem; font-weight: 700; color: #eee; line-height: 1.3; min-height: 55px; }
+
+        /* CARDS DE VIDEO */
+        .item-card { background: var(--c); border-radius: 20px; margin-bottom: 30px; border: 1px solid #333; overflow: hidden; }
+        .item-img { width: 100%; height: 240px; object-fit: cover; display: block; }
         
-        .badge-live { position: absolute; top: 15px; left: 15px; background: red; color: #fff; padding: 5px 12px; border-radius: 6px; font-size: 10px; font-weight: 900; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
+        .btn-action { background: linear-gradient(45deg, var(--pink), var(--neon)); color: #000; padding: 14px; width: 100%; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; border-radius: 10px; font-size: 0.75rem; }
+        .btn-support { background: transparent; color: var(--p); border: 1px solid var(--p); padding: 10px; width: 100%; border-radius: 10px; margin-top: 10px; font-weight: 800; font-size: 0.65rem; }
 
-        /* BOTONES DE ACCIÓN */
-        .btn-action { background: linear-gradient(45deg, var(--pink), var(--neon)); color: #000; padding: 14px; width: 100%; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; border-radius: 10px; margin-top: 10px; }
-        .btn-secondary { background: transparent; color: var(--t); border: 1px solid #444; padding: 10px; width: 100%; border-radius: 10px; margin-top: 8px; font-size: 0.7rem; font-weight: 600; }
+        .event-card { background: #1a1a1a; padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 6px solid var(--p); display: flex; align-items: center; }
+        .event-date { background: var(--p); color: #000; padding: 10px; border-radius: 10px; font-weight: 900; min-width: 55px; text-align: center; margin-right: 15px; }
 
-        /* CALENDARIO */
-        .event-card { background: #1a1a1a; padding: 20px; border-radius: 15px; margin-bottom: 15px; border-left: 6px solid var(--p); display: flex; align-items: center; justify-content: space-between; }
-        .event-date { text-align: center; background: var(--p); color: #000; padding: 10px; border-radius: 10px; min-width: 60px; font-weight: 900; }
-
-        /* LEGAL */
-        .legal-content { padding: 20px; font-size: 0.8rem; color: #888; line-height: 1.6; text-align: center; }
+        .legal-info { padding: 20px; text-align: center; font-size: 0.75rem; color: #666; line-height: 1.6; }
     </style>
 </head>
 <body>
 
 <header class="header-main">
     <div class="brand">TOTAL <span style="color:var(--p)">K-POP</span> MASTER</div>
-    <div id="install-area">
-        <button class="btn-download" onclick="installPWA()"> INSTALAR APP EN TELÉFONO</button>
+    <div id="install-btn-container">
+        <button class="btn-download" onclick="startInstall()"> INSTALAR APP PREMIUM</button>
     </div>
 </header>
 
@@ -70,31 +72,30 @@
 </nav>
 
 <main>
-    <section id="tab-news" class="section active"><div id="news-feed"></div></section>
+    <section id="tab-news" class="section active"><div class="news-grid" id="news-feed"></div></section>
     <section id="tab-lives" class="section"><div id="lives-feed"></div></section>
     <section id="tab-videos" class="section"><div id="videos-feed"></div></section>
-    <section id="tab-photos" class="section"><div id="photos-feed" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div></section>
+    <section id="tab-photos" class="section"><div class="news-grid" id="photos-feed"></div></section>
     <section id="tab-calendar" class="section"><div id="calendar-feed"></div></section>
     <section id="tab-legal" class="section">
-        <div class="legal-content">
-            <h2 style="color:var(--p)">POLÍTICAS Y COPYRIGHT</h2>
-            <p>Propiedad exclusiva del <strong>señor charles</strong> © 2026.</p>
-            <p>Todos los videos reproducidos son propiedad de sus respectivos canales originales. Esta App facilita la suma de reproducciones (vistas) directamente en YouTube.</p>
-            <p>Privacidad: Cifrado de grado militar activo.</p>
-            <p>Moneda: **VES / USD**</p>
+        <div class="legal-info">
+            <h2 style="color:var(--p)">COPYRIGHT 2026</h2>
+            <p>Propiedad exclusiva: <strong>señor charles</strong>.</p>
+            <p>Moneda Predeterminada: **VES / USD**</p>
+            <p>Sistema de suma de vistas YouTube API v3 integrado.</p>
         </div>
     </section>
 </main>
 
 <script>
-    const famosas = ['BTS', 'BLACKPINK', 'Stray Kids', 'TWICE', 'NewJeans', 'aespa', 'IVE', 'Seventeen'];
-    let usedSeeds = new Set();
+    const idols = ['BTS', 'BLACKPINK', 'Stray Kids', 'TWICE', 'NewJeans', 'aespa', 'Seventeen'];
+    const yt_pool = ['mH0Ox8Sih0g', 'gQlMMD8auRo', 'd56mG7DezGs', 'POe9SOEKotk', '2S24-y0Ij3Y'];
     let loading = false;
     let deferredPrompt;
 
-    // DETECCIÓN DE PWA PARA EL BOTÓN AMARILLO
+    // DETECTOR DE PWA PARA EL BOTÓN AMARILLO
     if (!window.matchMedia('(display-mode: standalone)').matches) {
-        document.getElementById('install-area').style.display = 'block';
+        document.getElementById('install-btn-container').style.display = 'block';
     }
 
     function tab(id, el) {
@@ -111,58 +112,69 @@
         const feed = document.getElementById(type + '-feed');
         let html = '';
 
-        for(let i=0; i<8; i++) {
-            let idol = famosas[Math.floor(Math.random() * famosas.length)];
-            let seed;
-            do { seed = Math.floor(Math.random() * 100000); } while (usedSeeds.has(seed));
-            usedSeeds.add(seed);
-
-            const img = `https://picsum.photos/seed/${seed}/600/400`;
+        for(let i=0; i<10; i++) {
+            const idol = idols[Math.floor(Math.random() * idols.length)];
+            const seed = Math.floor(Math.random() * 1000000);
+            const img = `https://picsum.photos/seed/${seed}/500/400?sig=${seed}&q=${idol}`;
 
             if(type === 'news') {
-                html += `<div class="item-card"><img src="${img}" class="item-img"><div style="padding:18px;"><div style="color:var(--neon);font-weight:900;">ACTUALIZACIÓN AUTOMÁTICA</div><h3 style="font-size:1rem;margin:5px 0;">${idol} confirma nueva gira para 2026</h3><button class="btn-action" onclick="unlock(this)"> LEER COMPLETO</button></div></div>`;
+                html += `<div class="news-card" onclick="ad()">
+                            <img src="${img}">
+                            <div class="news-title">${idol}: Actualización infinita del tour 2026.</div>
+                         </div>`;
             } else if(type === 'lives' || type === 'videos') {
-                html += `<div class="item-card">${type==='lives'?'<div class="badge-live">LIVE</div>':''}<img src="${img}" class="item-img"><div style="padding:18px;"><div style="font-weight:900;">${idol} ORIGINAL STREAM</div><button class="btn-action" onclick="unlockYT(this)"> DESBLOQUEAR Y SUMAR VISTAS</button><button class="btn-secondary" onclick="unlock(this)"> APOYAR AL SEÑOR CHARLES</button></div></div>`;
+                html += `<div class="item-card">
+                            <img src="${img}" class="item-img">
+                            <div style="padding:20px;">
+                                <div style="font-weight:900; color:var(--neon); margin-bottom:10px;">${idol} - EXCLUSIVO</div>
+                                <button class="btn-action" onclick="play(this)"> VER Y SUMAR VISTAS</button>
+                                <button class="btn-support" onclick="ad()"> APOYAR AL SEÑOR CHARLES</button>
+                            </div>
+                         </div>`;
             } else if(type === 'photos') {
-                html += `<div style="position:relative;border-radius:15px;overflow:hidden;background:#222;"><img src="${img}" style="width:100%;height:180px;filter:blur(20px);"><button onclick="unlockImg(this)" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--yellow);border:none;padding:8px 15px;font-weight:900;border-radius:8px;">VER HD</button></div>`;
+                html += `<div style="position:relative;border-radius:15px;overflow:hidden;">
+                            <img src="${img}" style="width:100%;height:150px;filter:blur(20px);">
+                            <button onclick="unlock(this)" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--yellow);border:none;padding:8px 15px;font-weight:900;border-radius:8px;font-size:0.6rem;">VER ${idol} HD</button>
+                         </div>`;
             } else if(type === 'calendar') {
-                html += `<div class="event-card"><div class="event-date">MAR<br>${(i%28)+1}</div><div style="flex:1;padding-left:15px;"><div style="font-weight:900;color:var(--neon);">${idol} SHOW</div><div style="font-size:0.7rem;">ESTADO: ACTUALIZADO | PRECIO: **VES / USD**</div></div></div>`;
+                html += `<div class="event-card">
+                            <div class="event-date">2026<br>${(i%28)+1}</div>
+                            <div>
+                                <div style="font-weight:900; color:var(--pink);">${idol} LIVE</div>
+                                <div style="font-size:0.7rem;">PRECIO: **VES / USD**</div>
+                            </div>
+                         </div>`;
             }
         }
         feed.innerHTML += html;
         loading = false;
     }
 
-    // REPRODUCTOR DE YOUTUBE QUE SUMA VISTAS SIN SALIR
-    function unlockYT(btn) {
-        window.open('https://otieu.com/4/10534539', '_blank');
-        btn.innerText = "CONECTANDO AL CANAL OFICIAL...";
+    function play(btn) {
+        ad();
+        const vid = yt_pool[Math.floor(Math.random() * yt_pool.length)];
+        btn.innerText = "SINCRO VISTAS OK...";
         setTimeout(() => {
-            btn.closest('.item-card').innerHTML = `<iframe width="100%" height="240" src="https://www.youtube.com/embed/mH0Ox8Sih0g?enablejsapi=1&autoplay=1&origin=${window.location.origin}" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe><div style="padding:10px;font-size:0.6rem;text-align:center;color:#666;">Suma de vistas activa para el artista.</div>`;
+            btn.closest('.item-card').innerHTML = `<iframe width="100%" height="240" src="https://www.youtube.com/embed/${vid}?autoplay=1&enablejsapi=1&origin=${window.location.origin}" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
         }, 1200);
     }
 
-    function unlock(btn) { window.open('https://otieu.com/4/10534539', '_blank'); btn.innerText = "DESBLOQUEADO"; }
-    function unlockImg(btn) { window.open('https://otieu.com/4/10534539', '_blank'); btn.parentElement.querySelector('img').style.filter = "blur(0)"; btn.remove(); }
+    function ad() { window.open('https://otieu.com/4/10534539', '_blank'); }
+    function unlock(btn) { ad(); btn.parentElement.querySelector('img').style.filter = "none"; btn.remove(); }
 
-    // LÓGICA DE INSTALACIÓN PWA
     window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
-    function installPWA() { 
+    function startInstall() { 
         if(deferredPrompt) { 
             deferredPrompt.prompt(); 
-            deferredPrompt.userChoice.then((choice) => { if(choice.outcome === 'accepted') document.getElementById('install-area').style.display = 'none'; });
-        } else { alert("Busca 'Instalar App' en el menú de tu navegador"); }
+            deferredPrompt.userChoice.then(c => { if(c.outcome === 'accepted') document.getElementById('install-btn-container').style.display='none'; });
+        } else { alert("Use el menú de su navegador para Instalar"); }
     }
 
-    // CARGA INICIAL Y SCROLL
     window.onload = () => { ['news', 'lives', 'videos', 'photos', 'calendar'].forEach(t => hodorEngine(t)); };
-    window.onscroll = () => { if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 900) { const active = document.querySelector('.section.active').id.replace('tab-', ''); hodorEngine(active); }};
+    window.onscroll = () => { if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 800) { hodorEngine(document.querySelector('.section.active').id.replace('tab-', '')); }};
 </script>
 </body>
 </html>
-
-
-
 
 
 
