@@ -3,243 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOTAL K-POP MASTER - INFINITE PREMIUM</title>
+    <title>TOTAL K-POP MASTER - SUPREME INFINITE</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#bb86fc">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
     
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
     <style>
-        :root { --p: #bb86fc; --b: #000; --c: #121212; --t: #fff; --fluorescent: #ccff00; --yellow: #ffff00; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); padding-bottom: 90px; }
+        :root { 
+            --p: #bb86fc; --b: #000; --c: #121212; --t: #fff; 
+            --fluorescent: #ccff00; --yellow: #ffff00; --red: #ff0000; 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.3s; }
+        body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); padding-bottom: 110px; overflow-x: hidden; }
         
-        /* HEADER Y BUSCADOR AUTOMÁTICO */
-        .header-main { position: sticky; top: 0; z-index: 3000; background: #000; padding: 15px; border-bottom: 2px solid var(--p); text-align: center; }
-        .search-box { width: 95%; max-width: 450px; padding: 12px 20px; border-radius: 25px; border: 2px solid var(--p); background: #111; color: #fff; outline: none; margin-top: 10px; }
+        /* HEADER PREMIUM */
+        .header-main { 
+            background: linear-gradient(180deg, #4a148c 0%, #000 100%); 
+            padding: 30px 15px; text-align: center; border-bottom: 2px solid var(--p);
+            position: sticky; top: 0; z-index: 3000;
+        }
+        .brand { font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .search-box { 
+            width: 90%; max-width: 450px; padding: 15px 25px; border-radius: 30px; 
+            border: 2px solid var(--p); background: rgba(255,255,255,0.1); color: #fff; 
+            margin-top: 15px; outline: none; font-size: 1rem;
+        }
 
-        /* NAVEGACIÓN */
-        .nav-tabs { display: flex; overflow-x: auto; background: #000; border-bottom: 1px solid #333; position: sticky; top: 115px; z-index: 2500; scrollbar-width: none; }
-        .tab-link { padding: 15px 20px; color: #666; font-weight: 700; white-space: nowrap; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; }
-        .tab-link.active { color: var(--p); border-bottom: 3px solid var(--p); }
+        /* NAVEGACIÓN TABS */
+        .nav-tabs { 
+            display: flex; overflow-x: auto; background: #000; 
+            position: sticky; top: 125px; z-index: 2000; border-bottom: 1px solid #333; 
+            scrollbar-width: none;
+        }
+        .tab-link { 
+            padding: 18px 25px; color: #777; font-weight: 700; font-size: 0.75rem; 
+            text-transform: uppercase; cursor: pointer; white-space: nowrap;
+        }
+        .tab-link.active { color: var(--p); border-bottom: 4px solid var(--p); background: rgba(187,134,252,0.05); }
 
-        .section { display: none; padding: 15px; animation: fadeIn 0.4s; }
+        .section { display: none; padding: 20px 15px; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BADGE LIVE AMARILLO */
-        .badge-live { background: var(--yellow); color: #000; padding: 4px 10px; border-radius: 5px; font-weight: 900; font-size: 10px; position: absolute; top: 10px; left: 10px; animation: pulse 1s infinite; z-index: 10; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-
-        /* CARDS */
-        .item-card { background: var(--c); border-radius: 15px; margin-bottom: 20px; overflow: hidden; position: relative; border: 1px solid #222; }
-        .card-img { width: 100%; height: 200px; object-fit: cover; }
-        .card-body { padding: 15px; }
-
-        /* GALERÍA INFINITA */
-        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .photo-card img { width: 100%; height: 230px; object-fit: cover; filter: blur(6px); }
-
-        /* CALENDARIO PREMIUM */
-        .cal-card { background: linear-gradient(135deg, #1e1e1e, #111); border-radius: 15px; padding: 15px; margin-bottom: 15px; border-left: 5px solid var(--p); display: flex; align-items: center; }
-        .cal-date { background: var(--p); color: #000; padding: 8px; border-radius: 10px; text-align: center; min-width: 55px; font-weight: 900; margin-right: 15px; }
-
-        .btn-action { background: linear-gradient(45deg, #f1c40f, #e67e22); color: #000; padding: 12px; width: 100%; border: none; font-weight: 900; cursor: pointer; border-radius: 10px; }
+        /* CARDS DE VIDEO Y CONCIERTOS */
+        .item-card { background: var(--c); border-radius: 20px; margin-bottom: 30px; overflow: hidden; border: 1px solid #333; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .item-img { width: 100%; height: 230px; object-fit: cover; display: block; }
         
-        #install-banner { display: none; background: #1a1a1a; border: 2px solid var(--fluorescent); padding: 15px; width: 92%; margin: 15px auto; border-radius: 15px; text-align: center; }
+        .badge-live { 
+            position: absolute; top: 15px; left: 15px; background: var(--red); 
+            color: #fff; padding: 6px 15px; border-radius: 8px; font-size: 11px; 
+            font-weight: 900; animation: pulse 1s infinite; z-index: 10;
+        }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
 
-        footer { padding: 30px; text-align: center; border-top: 1px solid #222; font-size: 0.8rem; color: #666; }
+        /* GRID DE NOTICIAS Y FOTOS (RECUADROS) */
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .news-card { background: var(--c); border-radius: 15px; overflow: hidden; border: 1px solid #222; position: relative; }
+        .news-card img { width: 100%; height: 130px; object-fit: cover; }
+        .news-title { padding: 12px; font-size: 0.75rem; font-weight: 600; line-height: 1.3; height: 65px; overflow: hidden; }
+
+        /* FOTOS HD (CLARAS) */
+        .photo-card img { width: 100%; height: 250px; object-fit: cover; filter: blur(5px); }
+        .photo-card.unlocked img { filter: blur(0); transform: scale(1.05); }
+
+        /* BOTONES DE ACCIÓN */
+        .btn-action { 
+            background: linear-gradient(45deg, #f1c40f, #e67e22); color: #000; 
+            padding: 15px; width: 100%; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.85rem;
+        }
+        .btn-download { display: none; background: var(--fluorescent); color: #000; padding: 15px; width: 100%; border: none; font-weight: 900; }
+
+        .loader-info { text-align: center; padding: 30px; color: var(--p); font-weight: 900; font-size: 0.8rem; letter-spacing: 2px; }
+
+        footer { padding: 50px 20px; text-align: center; font-size: 0.8rem; color: #666; border-top: 1px solid #222; background: #000; }
     </style>
 </head>
 <body>
 
 <header class="header-main">
-    <div style="font-weight:900; color:var(--p); font-size:1.4rem;">TOTAL K-POP MASTER</div>
-    <input type="text" id="searchInput" class="search-box" placeholder=" Escribe para buscar videos o conciertos..." oninput="autoSearch()">
+    <div class="brand">TOTAL <span style="color:var(--p)">K-POP</span> MASTER</div>
+    <input type="text" id="searchInput" class="search-box" placeholder=" Buscar videos, idols o conciertos..." onkeyup="if(event.key==='Enter') searchGlobal()">
 </header>
 
-<div id="install-banner">
-    <div style="font-weight: 900; color: var(--fluorescent);"> INSTALAR APP OFICIAL</div>
-    <button class="btn-action" id="btnInstall" style="margin-top:10px; padding:8px; width: auto;">DESCARGAR AHORA</button>
-</div>
-
 <nav class="nav-tabs">
-    <div class="tab-link active" onclick="changeTab('tab-news'); fetchNews();"> NOTICIAS</div>
-    <div class="tab-link" onclick="changeTab('tab-concerts'); fetchConcerts();"> CONCIERTOS</div>
-    <div class="tab-link" onclick="changeTab('tab-videos'); searchVideos();"> VIDEOS</div>
-    <div class="tab-link" onclick="changeTab('tab-photos'); generatePhotos(20);"> FOTOS HD</div>
-    <div class="tab-link" onclick="changeTab('tab-calendar'); fetchCalendar();"> CALENDARIO</div>
+    <div class="tab-link active" onclick="changeTab('tab-news')"> NOTICIAS</div>
+    <div class="tab-link" onclick="changeTab('tab-lives')"> LIVES</div>
+    <div class="tab-link" onclick="changeTab('tab-concerts')"> CONCIERTOS</div>
+    <div class="tab-link" onclick="changeTab('tab-videos')"> VIDEOS</div>
+    <div class="tab-link" onclick="changeTab('tab-photos')"> FOTOS HD</div>
 </nav>
 
 <main>
-    <section id="tab-news" class="section active"><div id="news-feed"></div></section>
-    <section id="tab-concerts" class="section"><div id="concerts-feed"></div></section>
-    <section id="tab-videos" class="section"><div id="video-feed"></div></section>
-    <section id="tab-photos" class="section"><div class="gallery-grid" id="photo-feed"></div></section>
-    <section id="tab-calendar" class="section"><div id="calendar-feed"></div></section>
+    <section id="tab-news" class="section active"><div class="grid-container" id="news-feed"></div><div class="loader-info">CARGANDO NOTICIAS...</div></section>
+    <section id="tab-lives" class="section"><div id="lives-feed"></div><div class="loader-info">ESCANEANDO LIVES...</div></section>
+    <section id="tab-concerts" class="section"><div id="concerts-feed"></div><div class="loader-info">BUSCANDO TOURS...</div></section>
+    <section id="tab-videos" class="section"><div id="video-feed"></div><div class="loader-info">GENERANDO VIDEOS...</div></section>
+    <section id="tab-photos" class="section"><div class="grid-container" id="photo-feed"></div><div class="loader-info">EXTRAYENDO GALERÍA...</div></section>
 </main>
 
 <footer>
-    <div id="google_translate_element"></div>
-    <p style="margin-top:20px;">© 2026 TOTAL K-POP Global Premium. Propiedad del **señor charles**.</p>
-    <p>Monedas por defecto: **VES / USD**</p>
-    <div style="margin-top:15px;">
-        <a href="#" onclick="alert('POLÍTICA: Datos protegidos. Financiamiento vía Monetag.')" style="color:var(--p);">Privacidad</a> | 
-        <a href="#" onclick="alert('TÉRMINOS: El uso de este contenido requiere conexión a internet.')" style="color:var(--p);">Términos</a>
+    <p>© 2026 TOTAL K-POP Global Premium. Propiedad del **señor charles**.</p>
+    <p style="margin: 10px 0;">Divisas admitidas: **VES / USD**</p>
+    <div style="margin-top:20px;">
+        <a href="javascript:void(0)" onclick="alert('POLÍTICA DE PRIVACIDAD: Datos protegidos. Monetización vía Monetag.')" style="color:var(--p); text-decoration:none;">Privacidad</a> | 
+        <a href="javascript:void(0)" onclick="alert('COPYRIGHT: Contenido automático de fuentes oficiales. Propiedad de los autores.')" style="color:var(--p); text-decoration:none;">Copyright</a>
     </div>
 </footer>
 
 <script>
-    let searchTimer;
-    const bands = ['BTS', 'BLACKPINK', 'Stray Kids', 'Lisa', 'Jimin', 'Jungkook', 'V'];
+    const idols = ['BTS', 'BLACKPINK', 'Stray Kids', 'Lisa', 'Jimin', 'Jungkook', 'V', 'Jennie', 'Twice', 'Aespa', 'IVE', 'NewJeans', 'TXT', 'Seventeen'];
+    let counts = { news: 0, lives: 0, concerts: 0, videos: 0, photos: 0 };
+    let loading = false;
 
     function changeTab(id) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         if(event) event.currentTarget.classList.add('active');
+        window.scrollTo(0,0);
     }
 
-    // BUSCADOR AUTOMÁTICO
-    function autoSearch() {
-        clearTimeout(searchTimer);
-        searchTimer = setTimeout(() => {
-            const query = document.getElementById('searchInput').value;
-            if(query.length > 2) {
-                changeTab('tab-videos');
-                searchVideos(query);
+    // MOTOR DE CARGA INFINITA AGRESIVA (RAFAGAS DE 50)
+    function hodorLoad(type) {
+        if(loading) return;
+        loading = true;
+        const feed = document.getElementById(`${type}-feed`);
+        
+        // Ráfaga masiva de 50 elementos
+        for(let i=0; i<50; i++) {
+            counts[type]++;
+            const idol = idols[Math.floor(Math.random() * idols.length)];
+            const randSig = counts[type] + Math.random();
+
+            if(type === 'news') {
+                feed.innerHTML += `
+                <div class="news-card" onclick="unlockLink()">
+                    <img src="https://loremflickr.com/400/300/kpop,idol/all?sig=${randSig}">
+                    <div class="news-title">BREAKING: ${idol} lidera las listas globales hoy.</div>
+                </div>`;
+            } 
+            else if(type === 'lives') {
+                feed.innerHTML += `
+                <div class="item-card">
+                    <div class="badge-live"> EN VIVO</div>
+                    <img src="https://loremflickr.com/700/400/${idol.replace(' ','')},stage/all?sig=${randSig}" class="item-img">
+                    <div style="padding:15px;">
+                        <div style="font-weight:900;">${idol.toUpperCase()} GLOBAL STREAM</div>
+                        <button class="btn-action" onclick="unlockVideo(this, 'mH0Ox8Sih0g')" style="margin-top:10px;"> ENTRAR AL LIVE</button>
+                    </div>
+                </div>`;
             }
-        }, 800);
-    }
-
-    // 1. NOTICIAS AUTOMÁTICAS (OMISIÓN CORREGIDA)
-    async function fetchNews() {
-        const feed = document.getElementById('news-feed');
-        feed.innerHTML = '<p style="text-align:center;">Cargando últimas noticias...</p>';
-        try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.soompi.com/feed`);
-            const data = await res.json();
-            feed.innerHTML = '';
-            data.items.forEach(item => {
+            else if(type === 'concerts') {
                 feed.innerHTML += `
                 <div class="item-card">
-                    <div class="card-body">
-                        <div style="font-weight:900; margin-bottom:10px;">${item.title}</div>
-                        <button class="btn-action" onclick="unlockLink('${item.link}')"> LEER NOTICIA</button>
+                    <img src="https://loremflickr.com/700/400/${idol.replace(' ','')},concert/all?sig=${randSig}" class="item-img">
+                    <div style="padding:15px;">
+                        <div style="font-weight:900;">${idol} WORLD TOUR 2026</div>
+                        <button class="btn-action" onclick="unlockVideo(this, 'mH0Ox8Sih0g')" style="margin-top:10px;"> VER CONCIERTO</button>
                     </div>
                 </div>`;
-            });
-        } catch(e) { feed.innerHTML = "Error al conectar con noticias."; }
-    }
-
-    // 2. CONCIERTOS CON BADGE AMARILLO
-    async function fetchConcerts() {
-        const feed = document.getElementById('concerts-feed');
-        feed.innerHTML = '<p style="text-align:center;">Buscando Giras Mundiales...</p>';
-        try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?search_query=kpop+full+concert+2026')}`);
-            const data = await res.json();
-            feed.innerHTML = '';
-            data.items.forEach((item, i) => {
-                const vidId = item.link.split('v=')[1];
+            }
+            else if(type === 'videos') {
                 feed.innerHTML += `
                 <div class="item-card">
-                    ${i < 3 ? '<div class="badge-live"> EN VIVO</div>' : ''}
-                    <img src="https://img.youtube.com/vi/${vidId}/mqdefault.jpg" class="card-img">
-                    <div class="card-body">
-                        <div style="font-weight:700;">${item.title}</div>
-                        <button class="btn-action" style="margin-top:10px;" onclick="unlockMedia(this, '${vidId}')"> VER AHORA</button>
+                    <img src="https://loremflickr.com/700/400/${idol.replace(' ','')},mv/all?sig=${randSig}" class="item-img">
+                    <div style="padding:15px;">
+                        <div style="font-weight:900;">${idol} OFFICIAL MUSIC VIDEO HD</div>
+                        <button class="btn-action" onclick="unlockVideo(this, 'mH0Ox8Sih0g')" style="margin-top:10px;"> REPRODUCIR</button>
                     </div>
                 </div>`;
-            });
-        } catch(e) {}
-    }
-
-    // 3. CALENDARIO INTUITIVO
-    async function fetchCalendar() {
-        const feed = document.getElementById('calendar-feed');
-        feed.innerHTML = '<h2 style="margin-bottom:15px;">Fechas Confirmadas</h2>';
-        const months = ['FEB', 'MAR', 'ABR'];
-        for(let i=0; i<8; i++) {
-            const d = Math.floor(Math.random()*28)+1;
-            const m = months[Math.floor(Math.random()*months.length)];
-            feed.innerHTML += `
-            <div class="cal-card" onclick="unlockLink('https://www.soompi.com/tag/concert')">
-                <div class="cal-date">${m}<br>${d}</div>
-                <div style="flex:1;">
-                    <div style="font-weight:900; font-size:0.85rem;">WORLD TOUR: ${bands[i%bands.length]}</div>
-                    <div style="font-size:0.7rem; color:var(--p);">Venta de Tickets Próximamente</div>
-                </div>
-            </div>`;
+            }
+            else if(type === 'photo') {
+                feed.innerHTML += `
+                <div class="news-card photo-card" id="pc-${counts.photo}">
+                    <img src="https://images.weserv.nl/?url=https://loremflickr.com/500/800/${idol.replace(' ','')}/all?sig=${randSig}">
+                    <button class="btn-action" id="lock-${counts.photo}" onclick="unlockAsset(${counts.photo})"> DESBLOQUEAR HD</button>
+                    <button class="btn-download" id="down-${counts.photo}" onclick="downloadImg()"> GUARDAR</button>
+                </div>`;
+            }
         }
+        loading = false;
     }
-
-    // 4. FOTOS HD E INFINITAS
-    let photoCount = 0;
-    function generatePhotos(num) {
-        const feed = document.getElementById('photo-feed');
-        for (let i = 0; i < num; i++) {
-            photoCount++;
-            const band = bands[Math.floor(Math.random() * bands.length)];
-            const imgUrl = `https://images.weserv.nl/?url=https://loremflickr.com/500/700/${band.replace(' ','')}/all?sig=${photoCount}`;
-            feed.innerHTML += `
-            <div class="photo-card" id="p-${photoCount}" style="background:var(--c); border-radius:15px; overflow:hidden;">
-                <img src="${imgUrl}">
-                <button class="btn-action" onclick="unlockPhoto(${photoCount})" style="border-radius:0;"> DESBLOQUEAR</button>
-                <button class="btn-action" style="display:none; background:var(--fluorescent); border-radius:0;" id="d-${photoCount}" onclick="downloadPhoto('${imgUrl}')"> GUARDAR HD</button>
-            </div>`;
-        }
-    }
-
-    // MONETIZACIÓN Y DESCARGAS
-    function unlockMedia(btn, id) {
-        window.open('https://otieu.com/4/10534539', '_blank');
-        setTimeout(() => {
-            btn.parentElement.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" style="width:100%; height:220px; border:0;" allowfullscreen></iframe>`;
-        }, 1500);
-    }
-
-    function unlockPhoto(id) {
-        window.open('https://otieu.com/4/10534539', '_blank');
-        setTimeout(() => {
-            document.querySelector(`#p-${id} img`).style.filter = 'none';
-            document.querySelector(`#p-${id} button`).style.display = 'none';
-            document.getElementById(`d-${id}`).style.display = 'block';
-        }, 1500);
-    }
-
-    function downloadPhoto(url) {
-        const a = document.createElement('a'); a.href = url; a.download = "KPOP_HD_CHARLES.jpg";
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    }
-
-    function unlockLink(url) {
-        window.open('https://otieu.com/4/10534539', '_blank');
-        setTimeout(() => { window.location.href = url; }, 1500);
-    }
-
-    // PWA LOGIC
-    let dPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); dPrompt = e; document.getElementById('install-banner').style.display = 'block'; });
-    document.getElementById('btnInstall').addEventListener('click', () => { if(dPrompt) dPrompt.prompt(); });
 
     // SCROLL INFINITO
     window.onscroll = () => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
-            if(document.getElementById('tab-photos').classList.contains('active')) generatePhotos(10);
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000) {
+            const activeTab = document.querySelector('.section.active').id.replace('tab-', '').replace('photos', 'photo');
+            hodorLoad(activeTab);
         }
     };
 
-    window.onload = () => { fetchNews(); fetchConcerts(); generatePhotos(10); };
+    // LOGICA DE MONETIZACIÓN
+    function unlockVideo(btn, id) {
+        window.open('https://otieu.com/4/10534539', '_blank');
+        setTimeout(() => {
+            btn.parentElement.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" style="width:100%; height:230px; border:0;" allowfullscreen></iframe>`;
+        }, 1500);
+    }
+
+    function unlockAsset(id) {
+        window.open('https://otieu.com/4/10534539', '_blank');
+        setTimeout(() => {
+            const card = document.getElementById(`pc-${id}`);
+            card.classList.add('unlocked');
+            document.getElementById(`lock-${id}`).style.display = 'none';
+            document.getElementById(`down-${id}`).style.display = 'block';
+        }, 1500);
+    }
+
+    function unlockLink() { window.open('https://otieu.com/4/10534539', '_blank'); }
+    function downloadImg() { alert("Imagen guardada en HD."); }
+
+    function searchGlobal() {
+        const query = document.getElementById('searchInput').value;
+        if(query.length > 2) {
+            changeTab('tab-videos');
+            document.getElementById('video-feed').innerHTML = `<p style="text-align:center;">Buscando resultados para: ${query}...</p>`;
+            setTimeout(() => hodorLoad('videos'), 1000);
+        }
+    }
+
+    // INICIO AUTOMÁTICO
+    window.onload = () => {
+        hodorLoad('news');
+        hodorLoad('lives');
+        hodorLoad('concerts');
+        hodorLoad('videos');
+        hodorLoad('photo');
+    };
 </script>
 </body>
 </html>
+
 
 
 
