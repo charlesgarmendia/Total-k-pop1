@@ -1,238 +1,96 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOTAL K-POP Global</title>
-    
+    <title>Calculadora Multi-Divisa</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#bb86fc">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
-        :root { --p: #bb86fc; --b: #0a0a0a; --c: #1e1e1e; --t: #ffffff; --fluorescent: #ccff00; --orange: #e65100; --blue: #00d2ff; --g: #2ecc71; }
-        * { box-sizing: border-box; outline: none; transition: 0.3s; }
-        body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); margin: 0; padding-bottom: 80px; }
-        
-        .header-kpop { 
-            width: 100%; height: 100px; 
-            background: radial-gradient(circle at top right, #4a148c, #000 90%); 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border-bottom: 2px solid var(--p);
-        }
-        .brand-name { font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
-        .brand-name span { color: var(--p); }
-
-        .search-container { width: 90%; max-width: 500px; margin: 15px auto; position: relative; }
-        .search-input { 
-            width: 100%; padding: 12px 20px; border-radius: 30px; border: 1px solid #333; 
-            background: var(--c); color: #fff; font-size: 0.9rem;
-        }
-        .search-input:focus { border-color: var(--p); box-shadow: 0 0 10px rgba(187, 134, 252, 0.2); }
-
-        .tabs-container {
-            display: flex; justify-content: space-around; background: #000;
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333;
-        }
-        .tab-button {
-            padding: 15px; color: #888; font-weight: 700; font-size: 0.75rem;
-            text-transform: uppercase; cursor: pointer; border-bottom: 3px solid transparent;
-        }
-        .tab-button.active { color: var(--p); border-bottom: 3px solid var(--p); }
-
-        .content-section { display: none; padding: 15px; width: 100%; max-width: 500px; margin: auto; }
-        .content-section.active { display: block; }
-
-        .btn-install-fluorescent {
-            background: var(--fluorescent); color: #000; border: none; padding: 15px; 
-            width: 90%; max-width: 450px; border-radius: 50px; font-weight: 900;
-            font-size: 0.9rem; text-transform: uppercase; cursor: pointer;
-            display: none; margin: 15px auto; box-shadow: 0 0 15px var(--fluorescent);
-            animation: pulse-yellow 2s infinite; text-align: center;
-        }
-        @keyframes pulse-yellow { 0% { transform: scale(1); } 70% { transform: scale(1.03); } 100% { transform: scale(1); } }
-
-        .btn-global-support {
-            background: linear-gradient(45deg, var(--blue), #9d50bb);
-            color: #fff; border: none; padding: 12px; width: 90%; border-radius: 12px;
-            font-weight: 900; text-decoration: none; display: block; text-align: center;
-            margin: 10px auto 20px; font-size: 0.8rem; box-shadow: 0 4px 10px rgba(0,210,255,0.2);
-        }
-
-        .item-card { background: var(--c); border-radius: 20px; margin-bottom: 20px; overflow: hidden; border: 1px solid #252525; }
-        .item-img { width: 100%; height: 180px; object-fit: cover; }
-        .item-info { padding: 15px; }
-        .btn-unlock { 
-            background: linear-gradient(to right, #f1c40f, var(--orange)); 
-            color: #000; padding: 12px; width: 100%; border-radius: 10px; 
-            font-weight: 900; text-decoration: none; display: block; text-align: center;
-            margin-top: 10px; font-size: 0.8rem; text-transform: uppercase;
-        }
-
-        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .photo-item { border-radius: 12px; overflow: hidden; height: 160px; position: relative; cursor: pointer; border: 1px solid #333; }
-        .photo-item img { width: 100%; height: 100%; object-fit: cover; }
-        .lock-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; }
-
-        .legal-box { font-size: 0.65rem; color: #555; padding: 25px; text-align: justify; border-top: 1px solid #222; }
+        :root { --p: #bb86fc; --b: #0a0a0a; --c: #1e1e1e; --t: #ffffff; --fluorescent: #ccff00; }
+        body { font-family: 'Poppins', sans-serif; background: var(--b); color: var(--t); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .calc-card { background: var(--c); width: 90%; max-width: 400px; padding: 25px; border-radius: 24px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2 { color: var(--p); font-weight: 900; text-align: center; margin-bottom: 25px; letter-spacing: 1px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.75rem; color: #888; margin-bottom: 8px; text-transform: uppercase; font-weight: 600; }
+        input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #121212; color: #fff; font-size: 1rem; box-sizing: border-box; transition: 0.3s; }
+        input:focus { border-color: var(--p); outline: none; box-shadow: 0 0 10px rgba(187, 134, 252, 0.2); }
+        .tasa-box { background: rgba(187, 134, 252, 0.05); padding: 15px; border-radius: 12px; border: 1px dashed #444; margin-bottom: 20px; }
+        .result-box { background: linear-gradient(145deg, #1e1e1e, #121212); padding: 20px; border-radius: 16px; text-align: center; border: 1px solid var(--p); }
+        .result-label { font-size: 0.7rem; color: var(--p); font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
+        .result-value { font-size: 1.6rem; font-weight: 900; color: var(--fluorescent); }
+        #btn-install { width: 100%; margin-top: 20px; padding: 12px; border-radius: 10px; border: none; background: var(--fluorescent); color: #000; font-weight: 900; cursor: pointer; display: none; }
     </style>
 </head>
 <body>
 
-<header class="header-kpop">
-    <div class="brand-name">TOTAL <span>K-POP</span></div>
-</header>
+<div class="calc-card">
+    <h2>FINANCE CALC</h2>
+    
+    <div class="tasa-box">
+        <label>Tasa de Cambio (Bs por 1$)</label>
+        <input type="number" id="tasa" value="50.00" oninput="calcular('USD')">
+    </div>
 
-<div class="tabs-container">
-    <div class="tab-button active" onclick="showTab('tab-news')">📰 <span class="lang-news">NOTICIAS</span></div>
-    <div class="tab-button" onclick="showTab('tab-videos')">📺 <span class="lang-videos">VIDEOS</span></div>
-    <div class="tab-button" onclick="showTab('tab-photos')">📸 <span class="lang-photos">FOTOS</span></div>
+    <div class="input-group">
+        <label>Monto en Dólares ($)</label>
+        <input type="number" id="usd" placeholder="0.00" oninput="calcular('USD')">
+    </div>
+
+    <div class="input-group">
+        <label>Monto en Bolívares (Bs)</label>
+        <input type="number" id="ves" placeholder="0.00" oninput="calcular('VES')">
+    </div>
+
+    <div class="result-box">
+        <div class="result-label">Conversión Total</div>
+        <div id="display" class="result-value">$ 0.00 / Bs 0.00</div>
+    </div>
+
+    <button id="btn-install">INSTALAR CALCULADORA</button>
 </div>
-
-<div class="search-container">
-    <input type="text" id="main-search" class="search-input" placeholder="Buscar grupos, idols..." onkeyup="filterContent()">
-</div>
-
-<button id="btn-install" class="btn-install-fluorescent">⚡ <span class="lang-install">INSTALAR APP</span> ⚡</button>
-
-<main>
-    <a href="https://otieu.com/4/10534539" target="_blank" class="btn-global-support">💎 <span class="lang-support">APOYA NUESTRA APP</span> 💎</a>
-
-    <section id="tab-news" class="content-section active">
-        <div id="news-feed"><p style="text-align:center; color:#555;">Sincronizando Seúl...</p></div>
-    </section>
-
-    <section id="tab-videos" class="content-section">
-        <div id="videos-feed">
-            <div class="item-card video-item">
-                <img src="https://img.youtube.com/vi/gdZLi9oWNZg/maxresdefault.jpg" class="item-img">
-                <div class="item-info">
-                    <div class="title-text" style="font-weight:700; font-size:0.9rem;">BTS (방탄소년단) - Official Premiere</div>
-                    <a href="https://otieu.com/4/10534539" target="_blank" class="btn-unlock" onclick="revelarVideo(this, 'gdZLi9oWNZg')">🔓 <span class="lang-btn-unlock">DESBLOQUEAR VIDEO</span></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="tab-photos" class="content-section">
-        <div class="gallery-grid" id="photos-feed"></div>
-        <a href="https://otieu.com/4/10534539" target="_blank" class="btn-unlock" style="margin-top:20px; background:var(--fluorescent); color:#000;">🔓 <span class="lang-unlock-gallery">VER MÁS FOTOS HD</span></a>
-    </section>
-
-    <section class="legal-box">
-        <p id="legal-text"></p>
-        <p style="text-align:center;">
-            <a href="privacy.html" style="color:var(--p); text-decoration:none; font-weight:bold;">Leer Política de Privacidad Completa</a>
-        </p>
-    </section>
-</main>
 
 <script>
-    const userLang = navigator.language || navigator.userLanguage;
-    const isEn = userLang.startsWith('en');
+    function calcular(tipo) {
+        const tasa = parseFloat(document.getElementById('tasa').value) || 0;
+        const usdInput = document.getElementById('usd');
+        const vesInput = document.getElementById('ves');
+        const display = document.getElementById('display');
 
-    const texts = {
-        news: isEn ? "NEWS" : "NOTICIAS",
-        videos: isEn ? "VIDEOS" : "VIDEOS",
-        photos: isEn ? "PHOTOS" : "FOTOS",
-        install: isEn ? "INSTALL K-POP APP" : "INSTALAR APP K-POP",
-        support: isEn ? "SUPPORT OUR APP" : "APOYA NUESTRA APP",
-        unlockBtn: isEn ? "UNLOCK VIDEO" : "DESBLOQUEAR VIDEO",
-        unlockNews: isEn ? "UNLOCK NEWS" : "DESBLOQUEAR NOTICIA",
-        unlockGallery: isEn ? "VIEW MORE HD PHOTOS" : "VER MÁS FOTOS HD",
-        searchPlaceholder: isEn ? "Search groups, idols..." : "Buscar grupos, idols...",
-        legal: isEn ? "<b>LEGAL NOTICE:</b> TOTAL K-POP Global is an information portal. By clicking 'Unlock', you are redirected to official sources. We do not claim ownership of the media shown. We use <b>Monetag</b> to finance this service." : "<b>AVISO LEGAL:</b> TOTAL K-POP Global es un portal de curación informativo. Al hacer clic en 'Desbloquear', usted es redirigido a la fuente oficial. No reclamamos propiedad sobre el contenido multimedia mostrado. Utilizamos <b>Monetag</b> para financiar este servicio gratuito."
-    };
+        if (tipo === 'USD') {
+            const usdVal = parseFloat(usdInput.value) || 0;
+            vesInput.value = (usdVal * tasa).toFixed(2);
+        } else {
+            const vesVal = parseFloat(vesInput.value) || 0;
+            usdInput.value = tasa > 0 ? (vesVal / tasa).toFixed(2) : 0;
+        }
 
-    document.querySelector('.lang-news').innerText = texts.news;
-    document.querySelector('.lang-videos').innerText = texts.videos;
-    document.querySelector('.lang-photos').innerText = texts.photos;
-    document.querySelector('.lang-install').innerText = texts.install;
-    document.querySelector('.lang-support').innerText = texts.support;
-    document.querySelectorAll('.lang-btn-unlock').forEach(el => el.innerText = texts.unlockBtn);
-    document.querySelector('.lang-unlock-gallery').innerText = texts.unlockGallery;
-    document.getElementById('legal-text').innerHTML = texts.legal;
-    document.getElementById('main-search').placeholder = texts.searchPlaceholder;
-
-    function showTab(tabId) {
-        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
+        display.innerText = `$ ${usdInput.value || "0.00"} / Bs ${vesInput.value || "0.00"}`;
     }
 
-    function filterContent() {
-        let input = document.getElementById('main-search').value.toLowerCase();
-        let cards = document.querySelectorAll('.item-card');
-        cards.forEach(card => {
-            let text = card.innerText.toLowerCase();
-            card.style.display = text.includes(input) ? "block" : "none";
-        });
-    }
-
-    async function fetchKPopNews() {
-        const feed = document.getElementById('news-feed');
-        try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.soompi.com/feed`);
-            const data = await res.json();
-            feed.innerHTML = '';
-            data.items.forEach(item => {
-                feed.innerHTML += `
-                    <div class="item-card">
-                        <img src="${item.thumbnail || 'https://via.placeholder.com/400x200'}" class="item-img">
-                        <div class="item-info">
-                            <div class="title-text" style="font-weight:700; color:var(--p); margin-bottom:5px; font-size:0.9rem;">${item.title}</div>
-                            <a href="https://otieu.com/4/10534539" target="_blank" class="btn-unlock" onclick="setTimeout(()=> window.location.href='${item.link}', 1500)">🔓 ${texts.unlockNews}</a>
-                        </div>
-                    </div>`;
-            });
-        } catch (e) { feed.innerHTML = "Error de conexión."; }
-    }
-
-    function loadPhotos() {
-        const photosFeed = document.getElementById('photos-feed');
-        const groups = ['bts', 'blackpink', 'twice', 'straykids', 'newjeans', 'seventeen', 'aespa', 'ive'];
-        groups.forEach((group, i) => {
-            photosFeed.innerHTML += `
-                <div class="photo-item" onclick="window.open('https://otieu.com/4/10534539', '_blank')">
-                    <img src="https://loremflickr.com/300/400/${group},kpop?random=${i}">
-                    <div class="lock-overlay"><span>🔒</span></div>
-                </div>`;
-        });
-    }
-
-    function revelarVideo(btn, vidId) {
-        const card = btn.closest('.item-card');
-        setTimeout(() => {
-            card.innerHTML = `<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:20px;"><iframe src="https://www.youtube.com/embed/${vidId}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe></div>`;
-        }, 2000);
-    }
-
-    window.onload = () => { fetchKPopNews(); loadPhotos(); };
-
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault(); deferredPrompt = e;
-        document.getElementById('btn-install').style.display = 'block';
-    });
-    document.getElementById('btn-install').addEventListener('click', () => {
-        if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; }
-    });
-
+    // Service Worker Registration
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
-                .then(reg => console.log('SW registrado con éxito', reg))
-                .catch(err => console.log('Fallo al registrar SW', err));
+            navigator.serviceWorker.register('sw.js');
         });
     }
+
+    // Install logic
+    let deferredPrompt;
+    const btnInstall = document.getElementById('btn-install');
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        btnInstall.style.display = 'block';
+    });
+    btnInstall.addEventListener('click', () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt = null;
+            btnInstall.style.display = 'none';
+        }
+    });
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
