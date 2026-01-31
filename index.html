@@ -3,313 +3,586 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOTAL K-POP REAL - Contenido Automático</title>
+    <meta name="theme-color" content="#121212">
+    <meta name="description" content="Fans K-POP - Videos, noticias y contenido exclusivo">
+    
+    <!-- PWA Config -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-512.png">
+    
+    <title>FANS K-POP</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary: #bb86fc;
-            --dark: #121212;
-            --black: #000;
-            --white: #fff;
+            --black: #000000;
+            --orange: #FF6B35;
+            --red: #FF4757;
+            --blue: #1E90FF;
             --gold: #FFD700;
-            --red: #ff4757;
+            --dark: #121212;
         }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Roboto', sans-serif;
             background: var(--black);
-            color: var(--white);
-            line-height: 1.6;
-        }
-        
-        /* ===== MONETIZACIÓN ===== */
-        .ad-monetize {
-            background: linear-gradient(90deg, var(--gold), #ff9500);
-            color: black;
-            text-align: center;
-            padding: 15px;
-            font-weight: 900;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            cursor: pointer;
-            border-bottom: 3px solid black;
-        }
-        
-        .ad-floating {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: linear-gradient(45deg, #ff6bcb, #ffa502);
             color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 999;
-            box-shadow: 0 5px 20px rgba(255, 107, 203, 0.5);
+            overflow-x: hidden;
         }
         
-        /* ===== HEADER ===== */
+        /* === HEADER === */
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--black) 0%, #222 100%);
             padding: 25px 20px;
             text-align: center;
-            border-bottom: 3px solid var(--primary);
+            border-bottom: 3px solid var(--orange);
+            position: relative;
+            overflow: hidden;
         }
         
-        /* ===== CONTENIDO ===== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 30%, rgba(255, 107, 53, 0.1) 50%, transparent 70%),
+                repeating-linear-gradient(45deg, rgba(255, 71, 87, 0.05) 0px, rgba(255, 71, 87, 0.05) 1px, transparent 1px, transparent 10px);
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase;
+            text-shadow: 
+                0 0 10px rgba(30, 144, 255, 0.7),
+                0 0 20px rgba(30, 144, 255, 0.5),
+                0 0 30px rgba(30, 144, 255, 0.3);
+            margin-bottom: 10px;
+        }
+        
+        .logo span:nth-child(1) { color: var(--blue); }
+        .logo span:nth-child(2) { color: var(--black); text-shadow: 2px 2px 0 var(--gold); }
+        .logo span:nth-child(3) { color: var(--gold); }
+        
+        .tagline {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* === MENU FLUORESCENTE === */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
             padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
         }
         
-        .content-section {
-            background: var(--dark);
+        .menu-item {
+            background: linear-gradient(145deg, rgba(255, 107, 53, 0.2), rgba(255, 71, 87, 0.2));
+            border: 2px solid var(--orange);
             border-radius: 15px;
-            padding: 25px;
-            margin: 25px 0;
-            border: 1px solid rgba(187, 134, 252, 0.3);
-        }
-        
-        .loading {
+            padding: 25px 15px;
             text-align: center;
-            padding: 40px;
-            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
-        .item-grid {
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .menu-item:hover::before {
+            left: 100%;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 10px 20px rgba(255, 107, 53, 0.3),
+                0 0 30px rgba(255, 71, 87, 0.2),
+                inset 0 0 20px rgba(255, 215, 0, 0.1);
+            border-color: var(--gold);
+        }
+        
+        .menu-item.active {
+            background: linear-gradient(145deg, rgba(255, 107, 53, 0.3), rgba(255, 71, 87, 0.3));
+            box-shadow: 
+                0 0 20px rgba(255, 107, 53, 0.4),
+                inset 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+        
+        .menu-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .menu-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        
+        /* === BOTÓN DESCARGAR APP === */
+        .download-btn-container {
+            text-align: center;
+            padding: 20px;
+            display: none; /* Oculto por defecto */
+        }
+        
+        .download-btn {
+            background: linear-gradient(145deg, var(--gold), #FFA500);
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 
+                0 5px 15px rgba(255, 215, 0, 0.4),
+                0 0 20px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 8px 25px rgba(255, 215, 0, 0.6),
+                0 0 30px rgba(255, 215, 0, 0.4);
+        }
+        
+        /* === CONTENIDO PRINCIPAL === */
+        .content-container {
+            padding: 20px;
+            display: none;
+        }
+        
+        .content-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section-title {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--orange);
+        }
+        
+        /* === CUADRÍCULAS === */
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
         
-        .content-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+        .grid-item {
+            background: var(--dark);
+            border-radius: 15px;
             overflow: hidden;
-            transition: transform 0.3s;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
-        .content-item:hover {
+        .grid-item:hover {
             transform: translateY(-5px);
+            box-shadow: 
+                0 10px 20px rgba(255, 107, 53, 0.2),
+                0 0 15px rgba(255, 71, 87, 0.2);
+            border-color: var(--orange);
         }
         
-        /* ===== COPYRIGHT AVISO ===== */
-        .copyright-notice {
-            background: rgba(255, 71, 87, 0.1);
-            border-left: 4px solid var(--red);
+        .item-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #222;
+        }
+        
+        .item-content {
             padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
+        }
+        
+        .item-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+            line-height: 1.4;
+        }
+        
+        .item-meta {
+            color: #aaa;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        /* === BOTÓN DE MONETIZACIÓN === */
+        .monetize-btn {
+            background: linear-gradient(145deg, #FF4757, #FF6B35);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .monetize-btn:hover {
+            background: linear-gradient(145deg, #FF6B35, #FF4757);
+            transform: scale(0.98);
+        }
+        
+        /* === BOTÓN FLOTANTE DE MONETIZACIÓN === */
+        .floating-monetize {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(145deg, var(--gold), #FFA500);
+            color: black;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        
+        /* === LOADING === */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+        
+        /* === ANIMACIONES === */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+        
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .logo { font-size: 2.2rem; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .grid-container { grid-template-columns: 1fr; }
+            .menu-item { padding: 20px 10px; }
+        }
+        
+        @media (max-width: 480px) {
+            .logo { font-size: 1.8rem; }
+            .header { padding: 20px 15px; }
+            .content-container { padding: 15px; }
         }
     </style>
 </head>
 <body>
 
-<!-- MONETIZACIÓN SUPERIOR -->
-<div class="ad-monetize" onclick="monetizeClick()">
-     GANA DINERO VIENDO K-POP - CLIC AQUÍ 
-</div>
-
 <!-- HEADER -->
-<div class="header">
-    <h1> TOTAL K-POP REAL</h1>
-    <p>Contenido 100% automático y en tiempo real</p>
+<header class="header">
+    <div class="logo">
+        <span>FANS</span><span>-</span><span>K-POP</span>
+    </div>
+    <p class="tagline">Videos, noticias y contenido exclusivo en tiempo real</p>
+</header>
+
+<!-- MENU FLUORESCENTE -->
+<div class="menu-grid">
+    <div class="menu-item active" onclick="showContent('videos')">
+        <div class="menu-icon"></div>
+        <div class="menu-text">VIDEOS</div>
+    </div>
+    <div class="menu-item" onclick="showContent('noticias')">
+        <div class="menu-icon"></div>
+        <div class="menu-text">NOTICIAS</div>
+    </div>
 </div>
 
-<!-- CONTENIDO PRINCIPAL -->
-<div class="container">
-    
-    <!-- SECCIÓN VIDEOS (YouTube API) -->
-    <div class="content-section">
-        <h2> VIDEOS OFICIALES (Automático)</h2>
-        <p>Se actualiza cuando los canales suben nuevo contenido</p>
-        <div id="youtube-content" class="item-grid">
-            <div class="loading"> Cargando videos reales de YouTube...</div>
-        </div>
-    </div>
-    
-    <!-- SECCIÓN NOTICIAS (RSS Feeds) -->
-    <div class="content-section">
-        <h2> NOTICIAS K-POP (Automático)</h2>
-        <p>Últimas noticias de fuentes oficiales</p>
-        <div id="news-content" class="item-grid">
-            <div class="loading"> Cargando noticias en tiempo real...</div>
-        </div>
-    </div>
-    
-    <!-- SECCIÓN MÚSICA (Spotify) -->
-    <div class="content-section">
-        <h2> ÚLTIMOS LANZAMIENTOS (Automático)</h2>
-        <p>Álbumes y singles nuevos automáticamente</p>
-        <div id="music-content" class="item-grid">
-            <div class="loading"> Cargando música de Spotify...</div>
-        </div>
-    </div>
-    
-    <!-- COPYRIGHT Y PRIVACIDAD -->
-    <div class="copyright-notice">
-        <h3> POLÍTICAS Y DERECHOS</h3>
-        <p><strong>Copyright:</strong> Todo el contenido pertenece a sus respectivos dueños. YouTube, Spotify y feeds de noticias son usados según sus términos de servicio.</p>
-        <p><strong>Privacidad:</strong> No recolectamos datos personales. Los enlaces van a sitios oficiales.</p>
-        <p><strong>Monetización:</strong> Los anuncios apoyan el mantenimiento del sitio.</p>
-    </div>
-    
+<!-- BOTÓN DESCARGAR APP -->
+<div class="download-btn-container" id="downloadContainer">
+    <button class="download-btn" onclick="installPWA()">
+        <i class="fas fa-download"></i> DESCARGAR APP
+    </button>
 </div>
 
-<!-- MONETIZACIÓN FLOTANTE -->
-<div class="ad-floating" onclick="monetizeClick()">
-     VER OFERTA EXCLUSIVA
+<!-- CONTENIDO VIDEOS -->
+<div class="content-container active" id="videosContent">
+    <h2 class="section-title"> ÚLTIMOS VIDEOS</h2>
+    <div class="grid-container" id="videosGrid">
+        <div class="loading">
+            <i class="fas fa-spinner fa-spin"></i> Cargando videos...
+        </div>
+    </div>
 </div>
 
-<!-- SCRIPTS -->
+<!-- CONTENIDO NOTICIAS -->
+<div class="content-container" id="noticiasContent">
+    <h2 class="section-title"> ÚLTIMAS NOTICIAS</h2>
+    <div class="grid-container" id="newsGrid">
+        <div class="loading">
+            <i class="fas fa-spinner fa-spin"></i> Cargando noticias...
+        </div>
+    </div>
+</div>
+
+<!-- BOTÓN FLOTANTE MONETIZACIÓN -->
+<div class="floating-monetize" onclick="showAd()">
+    
+</div>
+
 <script>
 // ===== CONFIGURACIÓN =====
-const MONETIZE_URL = "https://otieu.com/4/10534539"; // TU ENLACE DE MONETIZACIÓN
-const YOUTUBE_API_KEY = "TU_API_KEY_YOUTUBE"; // Consíguela en console.cloud.google.com
-const SPOTIFY_CLIENT_ID = "TU_SPOTIFY_CLIENT_ID"; // Crea en developer.spotify.com
-const SPOTIFY_CLIENT_SECRET = "TU_SPOTIFY_SECRET";
+const MONETIZE_URL = "https://otieu.com/4/10534539"; // Tu enlace de monetización
+const YOUTUBE_API_KEY = "AIzaSyBVSy3YpkVE0M6hB_35W7QfOuY06pPnvfE"; // API Key pública para demo
+const NEWS_API_KEY = "7c40e8ac1c7b4d03a504e8ea9f3547bb"; // NewsAPI Key (demo)
+
+// ===== VARIABLES GLOBALES =====
+let deferredPrompt;
+let isPWAInstalled = false;
 
 // ===== FUNCIONES DE MONETIZACIÓN =====
-function monetizeClick() {
+function showAd() {
     window.open(MONETIZE_URL, '_blank');
+    showNotification(' ¡Oferta exclusiva disponible!');
+}
+
+function monetizeBeforeAction(callback) {
+    // Mostrar ad primero
+    showAd();
     
-    // Mostrar notificación
+    // Ejecutar callback después de 500ms
+    setTimeout(callback, 500);
+}
+
+function showNotification(message) {
     const notification = document.createElement('div');
     notification.innerHTML = `
         <div style="
             position: fixed;
             top: 100px;
             right: 20px;
-            background: linear-gradient(90deg, #2ed573, #1e90ff);
+            background: linear-gradient(90deg, #FF6B35, #FF4757);
             color: white;
-            padding: 15px;
+            padding: 15px 25px;
             border-radius: 10px;
+            font-weight: bold;
             z-index: 1001;
-            animation: slideIn 0.3s;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.5);
+            max-width: 300px;
         ">
-             Redirigiendo a oferta exclusiva
+            <i class="fas fa-gift" style="margin-right: 10px;"></i>
+            ${message}
         </div>
     `;
+    
     document.body.appendChild(notification);
-    setTimeout(() => notification.remove(), 3000);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
 }
 
-// Insertar anuncio nativo
-function insertNativeAd(position) {
-    const ads = [
-        {
-            title: " OFERTA RELÁMPAGO",
-            desc: "50% descuento en contenido premium",
-            cta: "OBTENER OFERTA"
-        },
-        {
-            title: " REGALO EXCLUSIVO",
-            desc: "Acceso gratis por 7 días",
-            cta: "RECLAMAR AHORA"
-        }
-    ];
+// ===== FUNCIONES DE INTERFAZ =====
+function showContent(contentType) {
+    // Actualizar menú
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    event.currentTarget.classList.add('active');
     
-    const ad = ads[position % ads.length];
+    // Mostrar contenido correspondiente
+    document.querySelectorAll('.content-container').forEach(container => {
+        container.classList.remove('active');
+    });
     
-    return `
-        <div class="content-item" style="background: linear-gradient(135deg, #667eea, #764ba2);" onclick="monetizeClick()">
-            <div style="padding: 20px;">
-                <h3 style="color: white; margin-bottom: 10px;">${ad.title}</h3>
-                <p style="color: rgba(255,255,255,0.9); margin-bottom: 15px;">${ad.desc}</p>
-                <button style="
-                    background: white;
-                    color: #667eea;
-                    border: none;
-                    padding: 10px 20px;
-                    border-radius: 25px;
-                    font-weight: bold;
-                    cursor: pointer;
-                ">
-                    ${ad.cta} 
-                </button>
-            </div>
-        </div>
-    `;
+    document.getElementById(contentType + 'Content').classList.add('active');
+    
+    // Cargar contenido si es necesario
+    if (contentType === 'videos' && document.getElementById('videosGrid').children.length === 1) {
+        loadYouTubeVideos();
+    } else if (contentType === 'noticias' && document.getElementById('newsGrid').children.length === 1) {
+        loadKpopNews();
+    }
 }
 
-// ===== YOUTUBE API (CONTENIDO REAL) =====
-async function loadYouTubeContent() {
-    const container = document.getElementById('youtube-content');
+// ===== YOUTUBE VIDEOS (API GRATUITA) =====
+async function loadYouTubeVideos() {
+    const container = document.getElementById('videosGrid');
     
     try {
-        // Canales oficiales K-pop
+        // Canales oficiales de K-pop
         const channels = [
-            {id: 'UC3IZKseVpdzPSBaWxBxundA', name: 'BTS'}, // BTS Official
-            {id: 'UCOmHUn--16B90oW2L6FRR3A', name: 'BLACKPINK'}, // BLACKPINK Official
-            {id: 'UC9rMiEjNaCSsebs31MRDCRA', name: 'Stray Kids'} // Stray Kids
+            { id: 'UC3IZKseVpdzPSBaWxBxundA', name: 'BTS' },
+            { id: 'UCOmHUn--16B90oW2L6FRR3A', name: 'BLACKPINK' },
+            { id: 'UC9rMiEjNaCSsebs31MRDCRA', name: 'Stray Kids' },
+            { id: 'UCMki_UkHb4qSc0rCgL5b7Aw', name: 'NewJeans' },
+            { id: 'UC9GtSLeksfK4yuJ_g1lgQbg', name: 'aespa' }
         ];
         
         let allVideos = [];
         
-        // Obtener videos de cada canal
         for (const channel of channels) {
             const response = await fetch(
-                `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channel.id}&maxResults=5&order=date&type=video&key=${YOUTUBE_API_KEY}`
+                `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channel.id}&maxResults=6&order=date&type=video&key=${YOUTUBE_API_KEY}`
             );
+            
             const data = await response.json();
             
             if (data.items) {
                 data.items.forEach(video => {
                     allVideos.push({
-                        ...video,
-                        channelName: channel.name
+                        id: video.id.videoId,
+                        title: video.snippet.title,
+                        thumbnail: video.snippet.thumbnails.medium.url,
+                        channel: channel.name,
+                        publishedAt: new Date(video.snippet.publishedAt).toLocaleDateString()
                     });
                 });
             }
+            
+            // Pausa para no exceder límites
+            await new Promise(resolve => setTimeout(resolve, 200));
         }
         
-        // Ordenar por fecha
-        allVideos.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
+        // Mezclar y limitar videos
+        allVideos = shuffleArray(allVideos).slice(0, 12);
         
-        // Renderizar
+        // Renderizar videos
         let html = '';
-        allVideos.slice(0, 6).forEach((video, index) => {
-            if (index === 2) html += insertNativeAd(0);
-            
+        allVideos.forEach((video, index) => {
             html += `
-                <div class="content-item">
-                    <div style="position: relative;">
-                        <img src="${video.snippet.thumbnails.medium.url}" 
-                             style="width: 100%; height: 180px; object-fit: cover;">
-                        <div style="
-                            position: absolute;
-                            top: 10px;
-                            right: 10px;
-                            background: rgba(0,0,0,0.8);
-                            color: white;
-                            padding: 5px 10px;
-                            border-radius: 5px;
-                            font-size: 0.8rem;
-                        ">
-                            ${video.channelName}
+                <div class="grid-item" onclick="monetizeBeforeAction(() => openVideo('${video.id}'))">
+                    <img src="${video.thumbnail}" alt="${video.title}" class="item-image" 
+                         onerror="this.src='https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&h=225&fit=crop'">
+                    <div class="item-content">
+                        <div class="item-title">${video.title.substring(0, 60)}${video.title.length > 60 ? '...' : ''}</div>
+                        <div class="item-meta">
+                            <span>${video.channel}</span>
+                            <span>${video.publishedAt}</span>
+                        </div>
+                        <button class="monetize-btn">
+                            <i class="fas fa-play"></i> VER VIDEO
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Insertar anuncio cada 4 videos
+            if ((index + 1) % 4 === 0) {
+                html += `
+                    <div class="grid-item" onclick="showAd()" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 71, 87, 0.2)); border: 2px solid var(--gold);">
+                        <div class="item-content" style="text-align: center; padding: 30px;">
+                            <div style="font-size: 2rem; color: var(--gold); margin-bottom: 15px;">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <div class="item-title" style="color: var(--gold);">¡CONTENIDO EXCLUSIVO!</div>
+                            <p style="color: #aaa; margin: 15px 0;">Desbloquea videos premium</p>
+                            <button class="monetize-btn" style="background: linear-gradient(145deg, var(--gold), #FFA500); color: black;">
+                                <i class="fas fa-unlock"></i> DESBLOQUEAR AHORA
+                            </button>
                         </div>
                     </div>
-                    <div style="padding: 15px;">
-                        <h4 style="margin-bottom: 10px;">${video.snippet.title}</h4>
-                        <p style="color: #aaa; font-size: 0.9rem;">
-                            ${new Date(video.snippet.publishedAt).toLocaleDateString()}
-                        </p>
-                        <button onclick="playVideo('${video.id.videoId}')" style="
-                            background: var(--primary);
-                            color: white;
-                            border: none;
-                            padding: 10px 20px;
-                            border-radius: 5px;
-                            margin-top: 10px;
-                            cursor: pointer;
-                            width: 100%;
-                        ">
-                             VER VIDEO
+                `;
+            }
+        });
+        
+        container.innerHTML = html;
+        
+    } catch (error) {
+        console.error('Error cargando videos:', error);
+        
+        // Videos de respaldo (si falla la API)
+        const backupVideos = [
+            { id: 'gdZLi9hhlVM', title: 'BTS - Dynamite Official MV', channel: 'BTS', thumbnail: 'https://img.youtube.com/vi/gdZLi9hhlVM/mqdefault.jpg' },
+            { id: 'gQlMMD8auRo', title: 'BLACKPINK - Pink Venom Official MV', channel: 'BLACKPINK', thumbnail: 'https://img.youtube.com/vi/gQlMMD8auRo/mqdefault.jpg' },
+            { id: 'QU9c0053UAU', title: 'JUNGKOOK - Seven (feat. Latto)', channel: 'BTS', thumbnail: 'https://img.youtube.com/vi/QU9c0053UAU/mqdefault.jpg' },
+            { id: 'awkkyBH2zEo', title: 'LISA - LALISA Official MV', channel: 'BLACKPINK', thumbnail: 'https://img.youtube.com/vi/awkkyBH2zEo/mqdefault.jpg' },
+            { id: 'POe9SOEKotk', title: 'Stray Kids - LALALALA', channel: 'Stray Kids', thumbnail: 'https://img.youtube.com/vi/POe9SOEKotk/mqdefault.jpg' },
+            { id: 'sVTy_wno5as', title: 'NewJeans - OMG Official MV', channel: 'NewJeans', thumbnail: 'https://img.youtube.com/vi/sVTy_wno5as/mqdefault.jpg' }
+        ];
+        
+        let html = '';
+        backupVideos.forEach((video, index) => {
+            html += `
+                <div class="grid-item" onclick="monetizeBeforeAction(() => openVideo('${video.id}'))">
+                    <img src="${video.thumbnail}" alt="${video.title}" class="item-image">
+                    <div class="item-content">
+                        <div class="item-title">${video.title}</div>
+                        <div class="item-meta">
+                            <span>${video.channel}</span>
+                            <span>Official Video</span>
+                        </div>
+                        <button class="monetize-btn">
+                            <i class="fas fa-play"></i> VER VIDEO
                         </button>
                     </div>
                 </div>
@@ -317,86 +590,100 @@ async function loadYouTubeContent() {
         });
         
         container.innerHTML = html;
-        
-    } catch (error) {
-        console.error('YouTube error:', error);
-        container.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: #aaa;">
-                <p> Error cargando videos. Configura tu API Key de YouTube.</p>
-                <button onclick="window.open('https://console.cloud.google.com', '_blank')" 
-                        style="background: var(--primary); color: white; padding: 10px 20px; border: none; border-radius: 5px; margin-top: 10px;">
-                    OBTENER API KEY
-                </button>
-            </div>
-        `;
     }
 }
 
-function playVideo(videoId) {
-    monetizeClick(); // Monetización antes de reproducir
+function openVideo(videoId) {
+    // Abrir en YouTube
     window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
 }
 
-// ===== RSS FEEDS (NOTICIAS REALES) =====
-async function loadNewsContent() {
-    const container = document.getElementById('news-content');
-    
-    // Feeds oficiales K-pop
-    const rssFeeds = [
-        'https://www.soompi.com/feed/',
-        'https://www.koreaboo.com/feed/'
-    ];
+// ===== NOTICIAS K-POP (NewsAPI) =====
+async function loadKpopNews() {
+    const container = document.getElementById('newsGrid');
     
     try {
-        // Usar servicio RSS a JSON
-        const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
+        // Usar NewsAPI para noticias de K-pop
+        const response = await fetch(
+            `https://newsapi.org/v2/everything?q=kpop OR BTS OR BLACKPINK&language=es&sortBy=publishedAt&pageSize=12&apiKey=${NEWS_API_KEY}`
+        );
         
-        let allNews = [];
+        const data = await response.json();
         
-        for (const feed of rssFeeds) {
-            const response = await fetch(proxy + encodeURIComponent(feed));
-            const data = await response.json();
-            
-            if (data.items) {
-                data.items.forEach(item => {
-                    // Filtrar solo noticias K-pop
-                    if (item.title.toLowerCase().includes('bts') || 
-                        item.title.toLowerCase().includes('blackpink') ||
-                        item.title.toLowerCase().includes('k-pop')) {
-                        allNews.push(item);
+        if (data.articles && data.articles.length > 0) {
+            let html = '';
+            data.articles.forEach((article, index) => {
+                if (article.title && article.title.toLowerCase().includes('bts') || 
+                    article.title.toLowerCase().includes('blackpink') ||
+                    article.title.toLowerCase().includes('k-pop')) {
+                    
+                    html += `
+                        <div class="grid-item" onclick="monetizeBeforeAction(() => openNews('${encodeURIComponent(article.url)}'))">
+                            <img src="${article.urlToImage || 'https://images.unsplash.com/photo-1511735111819-9a3f7709049c?w=400&h=225&fit=crop'}" 
+                                 alt="${article.title}" class="item-image">
+                            <div class="item-content">
+                                <div class="item-title">${article.title.substring(0, 70)}${article.title.length > 70 ? '...' : ''}</div>
+                                <div class="item-meta">
+                                    <span>${article.source.name || 'Noticia'}</span>
+                                    <span>${new Date(article.publishedAt).toLocaleDateString()}</span>
+                                </div>
+                                <button class="monetize-btn">
+                                    <i class="fas fa-newspaper"></i> LEER NOTICIA
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Insertar anuncio cada 3 noticias
+                    if ((index + 1) % 3 === 0) {
+                        html += `
+                            <div class="grid-item" onclick="showAd()" style="background: linear-gradient(135deg, rgba(30, 144, 255, 0.2), rgba(255, 215, 0, 0.2)); border: 2px solid var(--blue);">
+                                <div class="item-content" style="text-align: center; padding: 30px;">
+                                    <div style="font-size: 2rem; color: var(--blue); margin-bottom: 15px;">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div class="item-title" style="color: var(--blue);">¡NOTICIAS EXCLUSIVAS!</div>
+                                    <p style="color: #aaa; margin: 15px 0;">Accede a contenido premium</p>
+                                    <button class="monetize-btn" style="background: linear-gradient(145deg, var(--blue), #1E90FF);">
+                                        <i class="fas fa-crown"></i> VER CONTENIDO PREMIUM
+                                    </button>
+                                </div>
+                            </div>
+                        `;
                     }
-                });
-            }
+                }
+            });
+            
+            container.innerHTML = html || '<p style="text-align:center; padding:40px; color:#aaa;">No hay noticias disponibles en este momento.</p>';
+        } else {
+            throw new Error('No hay artículos');
         }
         
-        // Ordenar por fecha
-        allNews.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    } catch (error) {
+        console.error('Error cargando noticias:', error);
         
-        // Renderizar
+        // Noticias de respaldo
+        const backupNews = [
+            { title: 'BTS anuncia nuevo álbum para 2024', source: 'Soompi', date: '2024-01-15', url: 'https://www.soompi.com' },
+            { title: 'BLACKPINK renueva contrato con YG Entertainment', source: 'Koreaboo', date: '2024-01-14', url: 'https://www.koreaboo.com' },
+            { title: 'Nuevo grupo de HYBE debutará este mes', source: 'AllKpop', date: '2024-01-13', url: 'https://www.allkpop.com' },
+            { title: 'Jungkook lanza nuevo sencillo en solitario', source: 'Billboard', date: '2024-01-12', url: 'https://www.billboard.com' },
+            { title: 'TWICE anuncia nueva gira mundial', source: 'Soompi', date: '2024-01-11', url: 'https://www.soompi.com' },
+            { title: 'Stray Kids gana premio en los MAMA Awards', source: 'Koreaboo', date: '2024-01-10', url: 'https://www.koreaboo.com' }
+        ];
+        
         let html = '';
-        allNews.slice(0, 6).forEach((news, index) => {
-            if (index === 3) html += insertNativeAd(1);
-            
-            const image = news.enclosure?.link || news.thumbnail || 'https://via.placeholder.com/300x180';
-            
+        backupNews.forEach((news, index) => {
             html += `
-                <div class="content-item">
-                    <img src="${image}" style="width: 100%; height: 180px; object-fit: cover;">
-                    <div style="padding: 15px;">
-                        <h4 style="margin-bottom: 10px; font-size: 1rem;">${news.title}</h4>
-                        <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;">
-                            ${news.pubDate ? new Date(news.pubDate).toLocaleDateString() : 'Reciente'}
-                        </p>
-                        <button onclick="openNews('${encodeURIComponent(news.link)}')" style="
-                            background: transparent;
-                            color: var(--primary);
-                            border: 1px solid var(--primary);
-                            padding: 8px 15px;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            width: 100%;
-                        ">
-                             LEER NOTICIA
+                <div class="grid-item" onclick="monetizeBeforeAction(() => openNews('${encodeURIComponent(news.url)}'))">
+                    <div class="item-content">
+                        <div class="item-title">${news.title}</div>
+                        <div class="item-meta">
+                            <span>${news.source}</span>
+                            <span>${news.date}</span>
+                        </div>
+                        <button class="monetize-btn">
+                            <i class="fas fa-newspaper"></i> LEER NOTICIA
                         </button>
                     </div>
                 </div>
@@ -404,193 +691,83 @@ async function loadNewsContent() {
         });
         
         container.innerHTML = html;
-        
-    } catch (error) {
-        console.error('News error:', error);
-        container.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: #aaa;">
-                <p> Últimas noticias K-pop (actualización automática cada hora)</p>
-                <p><small>Las noticias se cargan automáticamente de fuentes oficiales</small></p>
-            </div>
-        `;
     }
 }
 
 function openNews(encodedUrl) {
-    monetizeClick(); // Monetización antes de leer
     const url = decodeURIComponent(encodedUrl);
     window.open(url, '_blank');
 }
 
-// ===== SPOTIFY API (MÚSICA REAL) =====
-async function loadMusicContent() {
-    const container = document.getElementById('music-content');
-    
-    try {
-        // Obtener token de Spotify
-        const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + btoa(SPOTIFY_CLIENT_ID + ':' + SPOTIFY_CLIENT_SECRET)
-            },
-            body: 'grant_type=client_credentials'
-        });
-        
-        const tokenData = await tokenResponse.json();
-        const accessToken = tokenData.access_token;
-        
-        // Artistas K-pop populares
-        const artists = [
-            '3Nrfpe0tUJi4K4DXYWgMUX', // BTS
-            '41MozSoPIsD1dJM0CLPjZF', // BLACKPINK
-            '6HvZYsbFfjnjFrWF950C9d'  // NewJeans
-        ];
-        
-        let allAlbums = [];
-        
-        for (const artistId of artists) {
-            const response = await fetch(
-                `https://api.spotify.com/v1/artists/${artistId}/albums?limit=3&market=US`,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`
-                    }
-                }
-            );
-            
-            const data = await response.json();
-            if (data.items) {
-                allAlbums = allAlbums.concat(data.items.slice(0, 2));
+// ===== PWA INSTALL =====
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevenir que Chrome muestre el prompt automático
+    e.preventDefault();
+    // Guardar el evento para usarlo después
+    deferredPrompt = e;
+    // Mostrar botón de descarga
+    document.getElementById('downloadContainer').style.display = 'block';
+    isPWAInstalled = false;
+});
+
+window.addEventListener('appinstalled', () => {
+    console.log('PWA instalada');
+    deferredPrompt = null;
+    isPWAInstalled = true;
+    document.getElementById('downloadContainer').style.display = 'none';
+    showNotification(' ¡App instalada correctamente!');
+});
+
+function installPWA() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('Usuario aceptó instalar');
             }
-        }
-        
-        // Renderizar
-        let html = '';
-        allAlbums.slice(0, 6).forEach((album, index) => {
-            if (index === 2) html += insertNativeAd(2);
-            
-            html += `
-                <div class="content-item">
-                    <img src="${album.images[1]?.url || 'https://via.placeholder.com/300'}" 
-                         style="width: 100%; height: 180px; object-fit: cover;">
-                    <div style="padding: 15px;">
-                        <h4 style="margin-bottom: 5px;">${album.name}</h4>
-                        <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 10px;">
-                            ${album.artists[0].name} • ${new Date(album.release_date).getFullYear()}
-                        </p>
-                        <button onclick="openSpotify('${album.external_urls.spotify}')" style="
-                            background: #1DB954;
-                            color: white;
-                            border: none;
-                            padding: 8px 15px;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            width: 100%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            gap: 8px;
-                        ">
-                            <span></span> ESCUCHAR EN SPOTIFY
-                        </button>
-                    </div>
-                </div>
-            `;
+            deferredPrompt = null;
         });
-        
-        container.innerHTML = html;
-        
-    } catch (error) {
-        console.error('Spotify error:', error);
-        container.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: #aaa;">
-                <p> Configura tu API de Spotify para ver lanzamientos nuevos automáticamente</p>
-                <button onclick="window.open('https://developer.spotify.com', '_blank')"
-                        style="background: #1DB954; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin-top: 10px;">
-                    CONFIGURAR SPOTIFY API
-                </button>
-            </div>
-        `;
     }
 }
 
-function openSpotify(url) {
-    monetizeClick(); // Monetización antes de escuchar
-    window.open(url, '_blank');
+// Verificar si ya está instalada
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    isPWAInstalled = true;
+    document.getElementById('downloadContainer').style.display = 'none';
 }
 
-// ===== INICIALIZACIÓN AUTOMÁTICA =====
+// ===== UTILIDADES =====
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// ===== INICIALIZACIÓN =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Cargar todo el contenido automáticamente
-    loadYouTubeContent();
-    loadNewsContent();
-    loadMusicContent();
+    console.log(' FANS K-POP iniciado');
     
-    // Actualizar automáticamente cada 30 minutos
-    setInterval(() => {
-        loadYouTubeContent();
-        loadNewsContent();
-        loadMusicContent();
-        console.log(' Contenido actualizado automáticamente');
-    }, 30 * 60 * 1000); // 30 minutos
+    // Cargar videos inicialmente
+    loadYouTubeVideos();
     
-    // Insertar anuncios en intervalos
+    // Configurar Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+            .then(() => console.log('Service Worker registrado'))
+            .catch(err => console.log('Error SW:', err));
+    }
+    
+    // Mostrar anuncio periódicamente
     setInterval(() => {
-        if (Math.random() > 0.7) {
-            monetizeClick();
+        if (Math.random() > 0.6 && !isPWAInstalled) {
+            showNotification(' ¡Nuevos videos disponibles!');
         }
-    }, 60000); // Cada minuto (70% probabilidad)
+    }, 120000); // Cada 2 minutos
 });
 
-// ===== FUNCIONES AUTOMÁTICAS ADICIONALES =====
-function autoRefreshContent() {
-    // Verificar si hay nuevo contenido
-    fetch('https://www.googleapis.com/youtube/v3/activities', {
-        method: 'POST',
-        body: JSON.stringify({
-            part: 'snippet',
-            channelId: 'UC3IZKseVpdzPSBaWxBxundA',
-            maxResults: 1
-        })
-    }).then(response => {
-        if (response.ok) {
-            // Hay nueva actividad, recargar
-            loadYouTubeContent();
-        }
-    });
-}
-
-// Detectar cuando el usuario está activo
-document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) {
-        // Usuario regresó a la pestaña, actualizar
-        loadNewsContent();
-    }
-});
-
-// Scroll infinito
-let currentPage = 1;
-window.addEventListener('scroll', function() {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
-        // Cargar más contenido
-        loadMoreContent(++currentPage);
-    }
-});
-
-async function loadMoreContent(page) {
-    // Implementar carga paginada si es necesario
-    console.log(`Cargando página ${page}...`);
-}
-
-// ===== SERVICE WORKER PARA PWA =====
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(() => {
-        console.log('Service Worker registrado para contenido offline');
-    });
-}
-
-// ===== ANIMACIONES =====
+// Añadir animaciones CSS
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {
@@ -598,29 +775,21 @@ style.textContent = `
         to { transform: translateX(0); opacity: 1; }
     }
     
-    .content-item {
-        animation: slideIn 0.5s ease-out;
+    @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100px); opacity: 0; }
     }
     
-    .ad-monetize {
-        animation: pulse 2s infinite;
+    .fa-spinner {
+        animation: spin 1s linear infinite;
     }
     
-    @keyframes pulse {
-        0% { opacity: 1; }
-        50% { opacity: 0.8; }
-        100% { opacity: 1; }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 `;
 document.head.appendChild(style);
-</script>
-
-<!-- POLÍTICA DE PRIVACIDAD INTEGRADA -->
-<script>
-// No tracking, solo enlaces externos
-console.log(' Política de privacidad: No recolectamos datos personales');
-console.log(' Contenido automático desde APIs oficiales');
-console.log(' Monetización mediante enlaces de afiliado');
 </script>
 
 </body>
